@@ -14,8 +14,7 @@
 
 **Real-time AI brand protection, statutory disclosure validation (SEC, FDIC, FDA), non-compliant terminology detection, and 1-click auto-remediation for enterprise growth teams.**
 
-[Explore Live Demo](https://ais-dev-4bqmisoafo2jao5vthfhpq-303099483165.asia-southeast1.run.app) • [View Video Demo](#-judge-demo-script-2-minute-walkthrough) • [Vercel Deployment](#-zero-config-vercel-deployment) • [Architecture](#-system-architecture--data-flow)
-
+[Explore Live Demo](https://intelligentbrandgovernancee.vercel.app/) • [View Video Demo](#-judge-demo-script-2-minute-walkthrough) • [Vercel Deployment](#-zero-config-vercel-deployment) 
 </div>
 
 ---
