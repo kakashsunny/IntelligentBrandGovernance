@@ -1,0 +1,6 @@
+{
+  "name": "BrandGuard AI",
+  "description": "BrandGuard AI — Intelligent Brand Governance Platform by Team SIRIUS",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

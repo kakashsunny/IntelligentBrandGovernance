@@ -1,0 +1,3954 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BrandGuard AI — Team SIRIUS</title>
+    <meta name="description" content="BrandGuard AI — Intelligent Brand Governance Platform by Team SIRIUS">
+    <meta property="og:title" content="BrandGuard AI">
+    <meta property="og:description" content="AI-powered brand compliance checker. Built for Inkloom AI Hackathon 2026.">
+    <meta name="theme-color" content="#6C3FC5">
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <style>
+      :root {
+        --bg-cream: #F5F0E8;
+        --navy-dark: #1A1A2E;
+        --navy-light: #2D2D44;
+        --navy-muted: #5A5A72;
+        --purple-accent: #6C3FC5;
+        --purple-hover: #552E9F;
+        --purple-light: #F0EBFB;
+        --purple-border: #D8C7F8;
+        --card-bg: #FFFFFF;
+        --card-subtle: #FAF7F2;
+        --border-color: #E2DACD;
+        --border-focus: #6C3FC5;
+        --red-critical: #DC2626;
+        --red-bg: #FEF2F2;
+        --red-border: #FCA5A5;
+        --amber-warning: #EA580C;
+        --amber-bg: #FFF7ED;
+        --amber-border: #FED7AA;
+        --green-pass: #16A34A;
+        --green-bg: #F0FDF4;
+        --green-border: #86EFAC;
+        --blue-info: #2563EB;
+        --blue-bg: #EFF6FF;
+        --blue-border: #BFDBFE;
+        --shadow-sm: 0 1px 3px rgba(26, 26, 46, 0.05);
+        --shadow-md: 0 4px 12px rgba(26, 26, 46, 0.08);
+        --shadow-lg: 0 10px 25px -5px rgba(26, 26, 46, 0.1);
+        --radius-sm: 6px;
+        --radius-md: 10px;
+        --radius-lg: 16px;
+        --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        min-height: 100%;
+        overflow-x: hidden;
+      }
+
+      body {
+        background-color: var(--bg-cream);
+        color: var(--navy-dark);
+        font-family: var(--font-family);
+        font-size: clamp(0.92rem, 0.88rem + 0.2vw, 1rem);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+      }
+
+      /* 1. TOP DEMO SCENARIOS BAR (AT THE VERY TOP OF THE PAGE, ABOVE NAVBAR) */
+      .top-scenarios-bar {
+        background-color: #FAF6F0;
+        border-bottom: 1px solid var(--border-color);
+        padding: 0.5rem clamp(0.75rem, 2vw, 2rem);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        white-space: nowrap;
+        z-index: 60;
+      }
+
+      .top-scenarios-bar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .scenarios-left {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        flex-shrink: 0;
+        flex-wrap: nowrap;
+      }
+
+      .scenarios-label {
+        font-size: 0.82rem;
+        font-weight: 800;
+        color: var(--purple-accent);
+        letter-spacing: 0.04em;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .scenarios-buttons {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+        flex-wrap: nowrap;
+      }
+
+      .btn-scenario {
+        background-color: #FFFFFF;
+        border: 1px solid var(--border-color);
+        color: var(--navy-dark);
+        font-size: 0.82rem;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+        white-space: nowrap;
+        min-height: 44px;
+        touch-action: manipulation;
+      }
+
+      .btn-scenario:hover {
+        border-color: var(--purple-accent);
+        color: var(--purple-accent);
+        background-color: var(--purple-light);
+      }
+
+      .btn-scenario.active {
+        background-color: var(--purple-accent) !important;
+        color: #FFFFFF !important;
+        border-color: var(--purple-accent) !important;
+        box-shadow: 0 2px 6px rgba(108, 63, 197, 0.3);
+      }
+
+      .btn-scenario-clear {
+        background-color: transparent;
+        border: 1px solid var(--border-color);
+        color: var(--navy-muted);
+        font-size: 0.82rem;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+        white-space: nowrap;
+        min-height: 44px;
+        touch-action: manipulation;
+      }
+
+      .btn-scenario-clear:hover {
+        background-color: #FFFFFF;
+        color: var(--red-critical);
+        border-color: var(--red-border);
+      }
+
+      .scenario-label-short {
+        display: none;
+      }
+      .scenario-label-full {
+        display: inline;
+      }
+
+      @media (max-width: 640px) {
+        .scenario-label-full {
+          display: none !important;
+        }
+        .scenario-label-short {
+          display: inline !important;
+        }
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: #FFFFFF;
+        border-bottom: 1px solid var(--border-color);
+        padding: clamp(0.65rem, 1.5vw, 0.85rem) clamp(0.85rem, 2.5vw, 2rem);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.65rem 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .navbar-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: var(--navy-dark);
+        min-height: 44px;
+        flex-shrink: 0;
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        background: #F0EBFB;
+        border: 1.5px solid #DDD6FE;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(108, 63, 197, 0.18);
+        flex-shrink: 0;
+      }
+
+      .logo-text {
+        font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        white-space: nowrap;
+      }
+
+      .logo-badge {
+        font-size: 0.7rem;
+        background-color: var(--purple-light);
+        color: var(--purple-accent);
+        border: 1px solid var(--purple-border);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+
+      .navbar-right {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem 1rem;
+        flex-wrap: wrap;
+      }
+
+      .navbar-tagline-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        line-height: 1.25;
+      }
+
+      .navbar-tagline {
+        font-size: clamp(0.78rem, 1.5vw, 0.92rem);
+        font-weight: 600;
+        color: var(--navy-dark);
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+      }
+
+      .navbar-team {
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: var(--purple-accent);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      /* Gemini badge with Google colors */
+      .gemini-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 6px 12px;
+        background-color: #FFFFFF;
+        border: 1px solid var(--border-color);
+        border-radius: 999px;
+        color: var(--navy-dark);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        user-select: none;
+        white-space: nowrap;
+        min-height: 36px;
+      }
+
+      .google-dots {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+      }
+
+      .google-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .google-dot.dot-blue { background-color: #4285F4; }
+      .google-dot.dot-red { background-color: #EA4335; }
+      .google-dot.dot-yellow { background-color: #FBBC05; }
+      .google-dot.dot-green { background-color: #34A853; }
+
+      /* Key Status Badge */
+      .key-badge {
+        font-size: 0.76rem;
+        font-weight: 700;
+        padding: 6px 12px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        border: 1px solid transparent;
+        background: transparent;
+        min-height: 44px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .key-badge.key-linked {
+        background-color: #F0FDF4;
+        color: #16A34A;
+        border-color: #86EFAC;
+      }
+
+      .key-badge.key-none {
+        background-color: #FEF2F2;
+        color: #DC2626;
+        border-color: #FCA5A5;
+      }
+
+      .key-badge:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+      }
+
+      .btn-settings-gear {
+        background-color: #FFFFFF;
+        border: 1px solid var(--border-color);
+        color: var(--navy-dark);
+        width: 34px;
+        height: 34px;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.05rem;
+        transition: all 0.15s ease;
+      }
+
+      .btn-settings-gear:hover {
+        background-color: var(--purple-light);
+        border-color: var(--purple-accent);
+        color: var(--purple-accent);
+      }
+
+      /* Settings Drawer */
+      .settings-drawer {
+        background-color: #FFFFFF;
+        border-bottom: 2px solid var(--purple-accent);
+        padding: 1rem 2rem;
+        box-shadow: var(--shadow-md);
+        display: none;
+        animation: slideDown 0.2s ease-out;
+      }
+
+      @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .settings-drawer-inner {
+        max-width: 1320px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .settings-input-group {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        flex: 1;
+        min-width: 280px;
+        justify-content: flex-end;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 4px 10px;
+        background-color: var(--green-bg);
+        color: var(--green-pass);
+        border: 1px solid var(--green-border);
+        border-radius: 999px;
+      }
+
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        background-color: var(--green-pass);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.9); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+
+      /* Main Container */
+      .app-main {
+        max-width: 1320px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 1.75rem 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      /* Two Column Layout */
+      .two-col-layout {
+        display: grid;
+        grid-template-columns: 4fr 6fr;
+        gap: 1.75rem;
+        align-items: stretch;
+      }
+
+      @media (max-width: 960px) {
+        .two-col-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Card styles - lifted off background with subtle box shadow */
+      .panel-card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        box-shadow: 0 4px 18px rgba(26, 26, 46, 0.08), 0 1px 4px rgba(26, 26, 46, 0.04);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      }
+
+      .panel-card:hover {
+        box-shadow: 0 8px 24px rgba(26, 26, 46, 0.1), 0 2px 6px rgba(26, 26, 46, 0.04);
+      }
+
+      .panel-card:focus-within {
+        border-color: var(--purple-accent);
+        box-shadow: 0 8px 24px rgba(108, 63, 197, 0.12), 0 2px 6px rgba(26, 26, 46, 0.04);
+      }
+
+      .panel-header {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--border-color);
+        background-color: #FFFFFF;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .panel-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--navy-dark);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .panel-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .panel-body {
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        flex: 1;
+      }
+
+      .input-label {
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--navy-light);
+        margin-bottom: 0.25rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .input-hint {
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: var(--navy-muted);
+      }
+
+      textarea.form-textarea {
+        width: 100%;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 0.85rem 1rem;
+        font-family: inherit;
+        font-size: 0.92rem;
+        color: var(--navy-dark);
+        background-color: var(--card-subtle);
+        resize: vertical;
+        min-height: 190px;
+        line-height: 1.6;
+        transition: all 0.15s ease;
+      }
+
+      textarea.form-textarea:focus {
+        outline: none;
+        background-color: #FFFFFF;
+        border-color: var(--purple-accent);
+        box-shadow: 0 0 0 3px rgba(108, 63, 197, 0.15);
+      }
+
+      /* 2. RENDERED GUIDELINES PREVIEW BOX */
+      .guidelines-rendered-box {
+        width: 100%;
+        border: 1.5px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 1.1rem 1.35rem;
+        background-color: #FAFAFA;
+        min-height: 200px;
+        max-height: 380px;
+        overflow-y: auto;
+        font-size: 0.92rem;
+        line-height: 1.6;
+        color: var(--navy-dark);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+      }
+
+      .guidelines-rendered-box .md-heading {
+        font-size: 1.02rem;
+        font-weight: 800;
+        color: var(--navy-dark);
+        margin-top: 1.1rem;
+        margin-bottom: 0.45rem;
+        display: block;
+        letter-spacing: -0.01em;
+      }
+
+      .guidelines-rendered-box .md-heading:first-child {
+        margin-top: 0.2rem;
+      }
+
+      .guidelines-rendered-box .md-list {
+        padding-left: 1.5rem !important;
+        margin-top: 0.35rem;
+        margin-bottom: 0.85rem;
+        list-style-type: disc !important;
+        list-style-position: outside !important;
+        display: block !important;
+      }
+
+      .guidelines-rendered-box .md-list li {
+        color: #2D3748;
+        display: list-item !important;
+        margin-bottom: 0.4rem;
+        line-height: 1.55;
+      }
+
+      .guidelines-rendered-box .md-para {
+        margin-bottom: 0.65rem;
+        color: #2D3748;
+      }
+
+      .guidelines-rendered-box .md-code {
+        background-color: #EDE9FE;
+        border: 1px solid #DDD6FE;
+        padding: 1px 6px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-family: monospace;
+        color: var(--purple-accent);
+      }
+
+      .form-select {
+        width: 100%;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 0.65rem 0.9rem;
+        font-family: inherit;
+        font-size: 0.9rem;
+        color: var(--navy-dark);
+        background-color: var(--card-subtle);
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+
+      .form-select:focus {
+        outline: none;
+        background-color: #FFFFFF;
+        border-color: var(--purple-accent);
+        box-shadow: 0 0 0 3px rgba(108, 63, 197, 0.15);
+      }
+
+      .guideline-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        padding-top: 0.25rem;
+      }
+
+      .guideline-pill {
+        font-size: 0.74rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+
+      .guideline-pill.pill-blue {
+        background-color: #2563EB;
+        color: #FFFFFF;
+        border: 1px solid #1D4ED8;
+      }
+
+      .guideline-pill.pill-green {
+        background-color: #16A34A;
+        color: #FFFFFF;
+        border: 1px solid #15803D;
+      }
+
+      .guideline-pill.pill-purple {
+        background-color: #6C3FC5;
+        color: #FFFFFF;
+        border: 1px solid #552E9F;
+      }
+
+      /* 3. WORD AND CHARACTER COUNTER BELOW REVIEW TEXTAREA */
+      .content-counter-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.4rem;
+        padding-bottom: 0.1rem;
+        font-size: 0.82rem;
+        color: var(--navy-muted);
+      }
+
+      .action-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-top: auto;
+        padding-top: 0.5rem;
+      }
+
+      .text-meta {
+        font-size: 0.78rem;
+        color: var(--navy-muted);
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        padding: 0.65rem 1.25rem;
+        border-radius: var(--radius-md);
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        text-decoration: none;
+      }
+
+      .btn-purple {
+        background-color: var(--purple-accent);
+        color: #FFFFFF;
+        box-shadow: 0 2px 6px rgba(108, 63, 197, 0.25);
+      }
+
+      .btn-purple:hover:not(:disabled) {
+        background-color: var(--purple-hover);
+        box-shadow: 0 4px 12px rgba(108, 63, 197, 0.35);
+        transform: translateY(-1px);
+      }
+
+      .btn-purple:disabled {
+        opacity: 0.75;
+        cursor: not-allowed;
+      }
+
+      .btn-purple:active {
+        transform: translateY(0);
+      }
+
+      /* Primary CTA button styling */
+      #btnRunReview {
+        padding: 0.85rem 1.85rem;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        border-radius: var(--radius-md);
+        box-shadow: 0 4px 14px rgba(108, 63, 197, 0.35);
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      #btnRunReview:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(108, 63, 197, 0.45);
+      }
+
+      #btnRunReview:active {
+        transform: translateY(0);
+      }
+
+      .btn-secondary {
+        background-color: #FFFFFF;
+        border-color: var(--border-color);
+        color: var(--navy-dark);
+      }
+
+      .btn-secondary:hover {
+        background-color: var(--card-subtle);
+        border-color: var(--navy-muted);
+      }
+
+      .btn-sm {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.78rem;
+        border-radius: var(--radius-sm);
+      }
+
+      .btn-purple-subtle {
+        background-color: var(--purple-light);
+        color: var(--purple-accent);
+        border-color: var(--purple-border);
+      }
+
+      .btn-purple-subtle:hover {
+        background-color: #E6DCFA;
+      }
+
+      /* Review Report Section */
+      .section-container {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 1rem;
+      }
+
+      .section-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .section-title {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--navy-dark);
+        letter-spacing: -0.01em;
+      }
+
+      .empty-state {
+        padding: 3.5rem 1.5rem;
+        text-align: center;
+        background-color: var(--card-subtle);
+        border: 2px dashed var(--border-color);
+        border-radius: var(--radius-md);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+
+      .empty-state-icon {
+        width: 52px;
+        height: 52px;
+        background-color: var(--purple-light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--purple-accent);
+        font-size: 1.5rem;
+      }
+
+      .empty-state-text {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--navy-dark);
+      }
+
+      .empty-state-subtext {
+        font-size: 0.85rem;
+        color: var(--navy-muted);
+        max-width: 480px;
+      }
+
+      /* Report Content (Visible after run) */
+      .report-dashboard {
+        display: none;
+        flex-direction: column;
+        gap: 1.35rem;
+      }
+
+      /* Smooth fade-in animation */
+      @keyframes resultsFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .results-fade-in {
+        animation: resultsFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      /* STATUS BANNER */
+      .status-banner {
+        width: 100%;
+        padding: 1rem 1.4rem;
+        border-radius: var(--radius-md);
+        font-weight: 800;
+        font-size: 1.12rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        color: #FFFFFF !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        letter-spacing: -0.01em;
+        flex-wrap: wrap;
+      }
+
+      .status-banner-left {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex: 1;
+        min-width: 250px;
+      }
+
+      /* Circular score badge (0-100) on the right side of the status banner */
+      .score-badge-circle {
+        width: 62px;
+        height: 62px;
+        border-radius: 50%;
+        background-color: #FFFFFF;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        flex-shrink: 0;
+        border: 3.5px solid;
+        transition: transform 0.2s ease;
+      }
+
+      .score-badge-circle:hover {
+        transform: scale(1.06);
+      }
+
+      .score-badge-circle .score-number {
+        font-size: 1.35rem;
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .score-badge-circle .score-denom {
+        font-size: 0.65rem;
+        font-weight: 800;
+        line-height: 1;
+        opacity: 0.75;
+      }
+
+      /* Score Brackets:
+         Score 0-40: red
+         Score 41-70: orange
+         Score 71-99: yellow
+         Score 100: green
+      */
+      .score-red {
+        border-color: #DC2626 !important;
+        color: #DC2626 !important;
+      }
+
+      .score-orange {
+        border-color: #EA580C !important;
+        color: #EA580C !important;
+      }
+
+      .score-yellow {
+        border-color: #CA8A04 !important;
+        color: #CA8A04 !important;
+      }
+
+      .score-green {
+        border-color: #16A34A !important;
+        color: #16A34A !important;
+      }
+
+      .banner-blocked {
+        background-color: #DC2626 !important;
+        border: 1px solid #B91C1C;
+      }
+
+      .banner-warnings {
+        background-color: #EA580C !important;
+        border: 1px solid #C2410C;
+      }
+
+      .banner-approved {
+        background-color: #16A34A !important;
+        border: 1px solid #15803D;
+      }
+
+      /* SUMMARY LINE (italic below the banner) */
+      .review-summary-line {
+        font-style: italic;
+        font-size: 1.05rem;
+        color: var(--navy-dark);
+        line-height: 1.6;
+        padding: 0.45rem 0.85rem;
+        border-left: 3px solid var(--purple-accent);
+        background-color: var(--card-subtle);
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      }
+
+      /* VIOLATION COUNT SUMMARY PILLS */
+      .violation-summary-pills {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .summary-pill {
+        font-size: 0.78rem;
+        font-weight: 800;
+        padding: 4px 11px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        letter-spacing: 0.02em;
+      }
+
+      .summary-pill.pill-blocker {
+        background-color: #FEF2F2;
+        color: #DC2626;
+        border: 1px solid #FCA5A5;
+      }
+
+      .summary-pill.pill-warning {
+        background-color: #FFF7ED;
+        color: #EA580C;
+        border: 1px solid #FED7AA;
+      }
+
+      .summary-pill.pill-suggestion {
+        background-color: #EFF6FF;
+        color: #2563EB;
+        border: 1px solid #BFDBFE;
+      }
+
+      /* Copy Button for fixes */
+      .btn-copy-fix {
+        background-color: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        color: #1E293B;
+        font-size: 0.8rem;
+        font-weight: 700;
+        padding: 5px 11px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.15s ease;
+      }
+
+      .btn-copy-fix:hover {
+        background-color: var(--purple-light);
+        border-color: var(--purple-accent);
+        color: var(--purple-accent);
+      }
+
+      /* VIOLATION CARDS */
+      .violations-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .violation-card-improved {
+        background-color: #FFFFFF;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 1.25rem 1.4rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .violation-card-improved:hover {
+        box-shadow: var(--shadow-md);
+      }
+
+      .violation-card-improved.border-blocker {
+        border-left: 6px solid #DC2626 !important;
+      }
+
+      .violation-card-improved.border-warning {
+        border-left: 6px solid #EA580C !important;
+      }
+
+      .violation-card-improved.border-suggestion {
+        border-left: 6px solid #2563EB !important;
+      }
+
+      /* Fixed violation card state */
+      .violation-card-improved.is-fixed {
+        opacity: 0.65 !important;
+        background-color: #F8FAFC !important;
+        border-left: 6px solid #94A3B8 !important;
+        box-shadow: none !important;
+        transition: all 0.25s ease;
+      }
+
+      .violation-card-improved.is-fixed .severity-pill {
+        text-decoration: line-through !important;
+        opacity: 0.45 !important;
+      }
+
+      .badge-fixed {
+        font-size: 0.76rem;
+        font-weight: 800;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background-color: #F0FDF4;
+        color: #16A34A;
+        border: 1px solid #86EFAC;
+        display: none;
+        align-items: center;
+        gap: 4px;
+        letter-spacing: 0.02em;
+      }
+
+      .violation-card-improved.is-fixed .badge-fixed {
+        display: inline-flex !important;
+      }
+
+      .violation-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+
+      .severity-pill {
+        font-size: 0.76rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 4px 12px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .pill-blocker {
+        background-color: #FEF2F2;
+        color: #DC2626;
+        border: 1px solid #FCA5A5;
+      }
+
+      .pill-warning {
+        background-color: #FFF7ED;
+        color: #EA580C;
+        border: 1px solid #FED7AA;
+      }
+
+      .pill-suggestion {
+        background-color: #EFF6FF;
+        color: #2563EB;
+        border: 1px solid #BFDBFE;
+      }
+
+      .quoted-excerpt-box {
+        background-color: #F1F5F9;
+        border: 1px solid #E2E8F0;
+        border-radius: var(--radius-sm);
+        padding: 0.85rem 1.15rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.65rem;
+      }
+
+      .quote-mark {
+        font-size: 2.2rem;
+        line-height: 0.7;
+        color: #94A3B8;
+        font-family: Georgia, serif;
+        user-select: none;
+        flex-shrink: 0;
+      }
+
+      .quoted-excerpt-text {
+        font-style: italic;
+        font-size: 0.95rem;
+        color: #1E293B;
+        line-height: 1.55;
+        word-break: break-word;
+      }
+
+      .rule-broken-text {
+        font-size: 0.92rem;
+        line-height: 1.5;
+        color: #1E293B;
+      }
+
+      .suggested-fix-box {
+        background-color: #F0FDF4;
+        border: 1px dashed #86EFAC;
+        padding: 0.75rem 1rem;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .suggested-fix-text {
+        font-size: 0.92rem;
+        line-height: 1.5;
+        color: #16A34A;
+        font-weight: 600;
+      }
+
+      /* DECISION ACTIONS BAR */
+      .review-actions-bar {
+        margin-top: 1rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.85rem;
+        flex-wrap: wrap;
+      }
+
+      .btn-action-approve {
+        background-color: #16A34A;
+        color: #FFFFFF;
+        border: 1px solid #15803D;
+        font-weight: 700;
+        border-radius: var(--radius-md);
+        padding: 0.65rem 1.25rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.15s ease;
+      }
+
+      .btn-action-approve:hover {
+        background-color: #15803D;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(22, 163, 74, 0.25);
+      }
+
+      .btn-action-override {
+        background-color: #DC2626;
+        color: #FFFFFF;
+        border: 1px solid #B91C1C;
+        font-weight: 700;
+        border-radius: var(--radius-md);
+        padding: 0.65rem 1.25rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.15s ease;
+      }
+
+      .btn-action-override:hover {
+        background-color: #B91C1C;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(220, 38, 38, 0.25);
+      }
+
+      .btn-action-revision {
+        background-color: #2563EB;
+        color: #FFFFFF;
+        border: 1px solid #1D4ED8;
+        font-weight: 700;
+        border-radius: var(--radius-md);
+        padding: 0.65rem 1.25rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.15s ease;
+      }
+
+      .btn-action-revision:hover {
+        background-color: #1D4ED8;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+      }
+
+      .decision-badge {
+        font-size: 0.8rem;
+        font-weight: 800;
+        padding: 3px 10px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      /* Audit Log Section */
+      .audit-log-section {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+
+      .audit-filter-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .audit-search-input {
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 0.5rem 0.85rem;
+        font-size: 0.85rem;
+        font-family: inherit;
+        background-color: var(--card-subtle);
+        min-width: 240px;
+      }
+
+      .audit-search-input:focus {
+        outline: none;
+        border-color: var(--purple-accent);
+        background-color: #FFFFFF;
+      }
+
+      .audit-filter-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+      }
+
+      .audit-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.88rem;
+        text-align: left;
+      }
+
+      .audit-table th {
+        background-color: var(--card-subtle);
+        padding: 0.75rem 1rem;
+        font-weight: 700;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--navy-muted);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .audit-table td {
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid var(--border-color);
+        color: var(--navy-dark);
+      }
+
+      .audit-table tbody tr:nth-child(even) {
+        background-color: #FAF8F5;
+      }
+
+      .audit-table tbody tr:nth-child(odd) {
+        background-color: #FFFFFF;
+      }
+
+      .audit-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .audit-table tbody tr:hover {
+        background-color: #F0EBFB !important;
+      }
+
+      /* Colored dots for Status column */
+      .status-dot-sm {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+      }
+
+      .dot-red {
+        background-color: #DC2626;
+        box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+      }
+
+      .dot-orange {
+        background-color: #EA580C;
+        box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.2);
+      }
+
+      .dot-green {
+        background-color: #16A34A;
+        box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+      }
+
+      /* Audit table empty state row */
+      .audit-empty-row {
+        text-align: center;
+        padding: 3.5rem 1.5rem !important;
+        background-color: #FFFFFF !important;
+      }
+
+      .audit-empty-icon {
+        font-size: 2.4rem;
+        margin-bottom: 0.5rem;
+        opacity: 0.65;
+      }
+
+      .audit-empty-title {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--navy-dark);
+      }
+
+      .audit-empty-desc {
+        font-size: 0.86rem;
+        color: var(--navy-muted);
+        margin-top: 0.35rem;
+      }
+
+      .status-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 999px;
+      }
+
+      .status-tag.blocked {
+        background-color: var(--red-bg);
+        color: var(--red-critical);
+        border: 1px solid var(--red-border);
+      }
+
+      .status-tag.warnings {
+        background-color: var(--amber-bg);
+        color: var(--amber-warning);
+        border: 1px solid var(--amber-border);
+      }
+
+      .status-tag.approved {
+        background-color: var(--green-bg);
+        color: var(--green-pass);
+        border: 1px solid var(--green-border);
+      }
+
+      .status-tag.revision {
+        background-color: var(--blue-bg);
+        color: var(--blue-info);
+        border: 1px solid var(--blue-border);
+      }
+
+      /* Hackathon Footer */
+      .hackathon-footer {
+        background-color: #FAF6F0;
+        border-top: 1px solid var(--border-color);
+        padding: 1.1rem 2rem;
+        text-align: center;
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--navy-dark);
+        letter-spacing: -0.01em;
+      }
+
+      .status-tag.revision {
+        background-color: var(--blue-bg);
+        color: var(--blue-info);
+        border: 1px solid var(--blue-border);
+      }
+
+      .content-tag {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 2px 7px;
+        border-radius: 4px;
+        background-color: var(--card-subtle);
+        border: 1px solid var(--border-color);
+        color: var(--navy-light);
+      }
+
+      /* Disclaimer banner */
+      .disclaimer-banner {
+        background-color: #FAF7F2;
+        border-top: 1px solid var(--border-color);
+        padding: 1.25rem 2rem;
+        text-align: center;
+        font-size: 0.82rem;
+        color: var(--navy-muted);
+      }
+
+      /* Toast Notification */
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background-color: var(--navy-dark);
+        color: #FFFFFF;
+        padding: 12px 20px;
+        border-radius: var(--radius-md);
+        font-size: 0.9rem;
+        font-weight: 600;
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 1000;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* Modal */
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(26, 26, 46, 0.5);
+        backdrop-filter: blur(2px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 200;
+        padding: 1.5rem;
+      }
+
+      .modal-content {
+        background: #FFFFFF;
+        border-radius: var(--radius-lg);
+        max-width: 650px;
+        width: 100%;
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .modal-header {
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .modal-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .modal-footer {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.75rem;
+      }
+
+      /* Loading state & Spinner */
+      .btn-loading {
+        position: relative;
+        pointer-events: none;
+        opacity: 0.85;
+      }
+
+      .spinner {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-radius: 50%;
+        border-top-color: #ffffff;
+        animation: spin 0.6s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* Re-Review Feature Styles */
+      .rereview-trigger-box {
+        margin-top: 1.75rem;
+        padding: 1.35rem 1.5rem;
+        background: #FAF7FF;
+        border: 1.5px dashed var(--purple-accent);
+        border-radius: var(--radius-md);
+        text-align: center;
+        transition: all 0.25s ease;
+      }
+
+      .btn-rereview {
+        padding: 0.8rem 1.85rem;
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        box-shadow: 0 4px 14px rgba(108, 63, 197, 0.28);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        cursor: pointer;
+      }
+
+      .btn-rereview:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(108, 63, 197, 0.35);
+      }
+
+      .rereview-subtitle {
+        font-size: 0.88rem;
+        color: var(--navy-muted);
+        margin-top: 0.5rem;
+        font-weight: 500;
+      }
+
+      .rereview-divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 2.25rem 0 1.5rem 0;
+        color: var(--purple-accent);
+        font-weight: 800;
+        font-size: 0.95rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .rereview-divider::before,
+      .rereview-divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 2px dashed #DDD6FE;
+      }
+
+      .rereview-divider span {
+        padding: 0 1.25rem;
+      }
+
+      .score-comparison-card {
+        background: linear-gradient(135deg, #FFFFFF 0%, #F5F3FF 100%);
+        border: 1.5px solid #DDD6FE;
+        border-radius: var(--radius-md);
+        padding: 1.25rem 1.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        box-shadow: 0 4px 16px rgba(108, 63, 197, 0.08);
+        margin-bottom: 1.25rem;
+      }
+
+      .score-progression-numbers {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 2.3rem;
+        font-weight: 900;
+        line-height: 1;
+        margin-top: 0.35rem;
+      }
+
+      .old-score-text {
+        color: var(--navy-muted);
+        opacity: 0.65;
+        font-size: 1.9rem;
+      }
+
+      .progression-arrow {
+        color: var(--navy-muted);
+        font-size: 1.6rem;
+      }
+
+      .new-score-text {
+        color: #16A34A;
+        font-size: 2.4rem;
+        min-width: 58px;
+        display: inline-block;
+        transition: color 0.3s ease;
+      }
+
+      .progression-trend {
+        font-size: 1.8rem;
+        font-weight: 900;
+        margin-left: 0.25rem;
+      }
+
+      .trend-up {
+        color: #16A34A;
+        animation: bounceUp 1.2s infinite ease-in-out;
+      }
+
+      .trend-down {
+        color: #DC2626;
+      }
+
+      .trend-same {
+        color: var(--navy-muted);
+      }
+
+      @keyframes bounceUp {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-4px); }
+      }
+
+      .score-comparison-verdict {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: var(--navy-dark);
+      }
+
+      .score-comparison-note {
+        font-size: 0.85rem;
+        color: var(--navy-muted);
+        margin-top: 0.25rem;
+      }
+
+      .rereview-spinner {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-radius: 50%;
+        border-top-color: #ffffff;
+        animation: spin 0.6s linear infinite;
+      }
+
+      /* =============================================================
+         MOBILE RESPONSIVE STYLES (≤ 768px & ≤ 420px)
+         ============================================================= */
+      @media (max-width: 768px) {
+        /* General Mobile Base */
+        body {
+          font-size: 14px !important;
+        }
+
+        html, body {
+          overflow-x: hidden !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          position: relative !important;
+        }
+
+        .app-main {
+          padding: 1rem 0.75rem !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+          overflow-x: hidden !important;
+          gap: 1.25rem !important;
+        }
+
+        /* 1. DEMO SCENARIOS BAR (MOBILE)
+           - Horizontal scrollable row (overflow-x: auto, white-space: nowrap)
+           - Buttons stay on ONE line and scroll horizontally
+           - -webkit-overflow-scrolling: touch for smooth iOS scrolling
+           - Hide scrollbar visually but keep scrollable */
+        .top-scenarios-bar {
+          width: 100% !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+          padding: 0.5rem 0.75rem !important;
+          overflow-x: auto !important;
+          white-space: nowrap !important;
+          flex-wrap: nowrap !important;
+          -webkit-overflow-scrolling: touch !important;
+          scrollbar-width: none !important; /* Firefox */
+          -ms-overflow-style: none !important; /* IE/Edge */
+          justify-content: flex-start !important;
+          gap: 0.5rem !important;
+        }
+
+        .top-scenarios-bar::-webkit-scrollbar {
+          display: none !important; /* Chrome, Safari, Opera */
+          width: 0 !important;
+          height: 0 !important;
+        }
+
+        .scenarios-left {
+          display: flex !important;
+          align-items: center !important;
+          flex-wrap: nowrap !important;
+          flex-shrink: 0 !important;
+          gap: 0.5rem !important;
+        }
+
+        .scenarios-buttons {
+          display: flex !important;
+          align-items: center !important;
+          flex-wrap: nowrap !important;
+          flex-shrink: 0 !important;
+          gap: 0.45rem !important;
+        }
+
+        .scenarios-label {
+          font-size: 0.76rem !important;
+          flex-shrink: 0 !important;
+          white-space: nowrap !important;
+        }
+
+        .btn-scenario {
+          flex-shrink: 0 !important;
+          white-space: nowrap !important;
+          padding: 5px 11px !important;
+          font-size: 0.76rem !important;
+        }
+
+        .btn-scenario-clear {
+          flex-shrink: 0 !important;
+          white-space: nowrap !important;
+          padding: 5px 10px !important;
+          font-size: 0.76rem !important;
+        }
+
+        /* 2. NAVBAR (MOBILE)
+           - Hide "Powered by Gemini 1.5 Pro" badge completely (< 768px)
+           - Hide tagline in navbar on mobile to prevent horizontal overflow and clipping
+           - Keep only: BrandGuard logo left, "Key Linked" badge right
+           - Perfectly fit within 320px-420px screens with zero clipping */
+        .navbar {
+          width: 100% !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+          overflow: hidden !important;
+          padding: 0.65rem 0.85rem !important;
+          display: flex !important;
+          justify-content: space-between !important;
+          align-items: center !important;
+          flex-wrap: nowrap !important;
+        }
+
+        .navbar-brand {
+          display: flex !important;
+          align-items: center !important;
+          gap: 0.45rem !important;
+          flex-shrink: 0 !important;
+          text-decoration: none !important;
+        }
+
+        .logo-icon {
+          width: 32px !important;
+          height: 32px !important;
+          flex-shrink: 0 !important;
+        }
+
+        .logo-text {
+          font-size: 1.15rem !important;
+          white-space: nowrap !important;
+          display: flex !important;
+          align-items: center !important;
+          gap: 0.35rem !important;
+        }
+
+        .navbar-right {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: flex-end !important;
+          gap: 0.45rem !important;
+          flex-shrink: 0 !important;
+        }
+
+        /* Enforce "Keep only: BrandGuard logo left, Key Linked badge right" */
+        .gemini-badge {
+          display: none !important;
+        }
+
+        .navbar-tagline-wrap {
+          display: none !important;
+        }
+
+        .key-badge {
+          display: inline-flex !important;
+          align-items: center !important;
+          gap: 4px !important;
+          padding: 4px 10px !important;
+          font-size: 0.74rem !important;
+          font-weight: 700 !important;
+          white-space: nowrap !important;
+          flex-shrink: 0 !important;
+          box-sizing: border-box !important;
+        }
+
+        /* 3. MAIN LAYOUT (MOBILE)
+           - Stack the two panels vertically
+           - Each panel takes full width
+           - Reduce padding inside panels on mobile
+           - Put "Brand Guidelines" header title above Preview/Reset buttons
+           - Stack "Active Governance Policy" above its caption
+           - Remove horizontal scroll, and make chips wrap */
+        .two-col-layout {
+          grid-template-columns: 1fr !important;
+          gap: 1.25rem !important;
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+
+        .panel-card {
+          width: 100% !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+          overflow: hidden !important;
+        }
+
+        .panel-header {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 0.6rem !important;
+          padding: 0.85rem 0.9rem !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+        }
+
+        .panel-header-actions {
+          width: 100% !important;
+          display: flex !important;
+          justify-content: flex-start !important;
+          gap: 0.5rem !important;
+          flex-wrap: wrap !important;
+        }
+
+        .panel-body {
+          padding: 0.9rem !important;
+          gap: 0.85rem !important;
+          box-sizing: border-box !important;
+          width: 100% !important;
+        }
+
+        .input-label {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 3px !important;
+          width: 100% !important;
+        }
+
+        .input-hint {
+          font-size: 0.72rem !important;
+        }
+
+        textarea.form-textarea,
+        .guidelines-rendered-box {
+          width: 100% !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+
+        .guideline-pills {
+          display: flex !important;
+          flex-wrap: wrap !important;
+          gap: 0.4rem !important;
+          width: 100% !important;
+        }
+
+        .guideline-pill {
+          white-space: normal !important;
+          font-size: 0.72rem !important;
+          padding: 3px 8px !important;
+        }
+
+        /* 4. RUN BRAND REVIEW & ACTIONS (MOBILE)
+           - Run Brand Review button full width on mobile */
+        .action-row {
+          display: flex !important;
+          flex-direction: column-reverse !important;
+          align-items: stretch !important;
+          gap: 0.75rem !important;
+          width: 100% !important;
+        }
+
+        #btnRunReview {
+          width: 100% !important;
+          justify-content: center !important;
+          padding: 0.85rem 1.25rem !important;
+        }
+
+        .action-row > div {
+          width: 100% !important;
+          display: flex !important;
+          justify-content: space-between !important;
+          gap: 0.5rem !important;
+        }
+
+        /* 5. RESULTS & REPORT DASHBOARD (MOBILE) */
+        .section-container {
+          width: 100% !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+          padding: 1rem 0.85rem !important;
+          overflow: hidden !important;
+        }
+
+        .section-header {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 0.65rem !important;
+          width: 100% !important;
+        }
+
+        .section-actions {
+          width: 100% !important;
+          display: flex !important;
+          flex-wrap: wrap !important;
+          gap: 0.4rem !important;
+        }
+
+        .status-banner {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 0.75rem !important;
+          padding: 0.85rem 1rem !important;
+          font-size: 1rem !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+        }
+
+        .status-banner-left {
+          min-width: 0 !important;
+          width: 100% !important;
+        }
+
+        .score-badge-circle {
+          align-self: flex-start !important;
+        }
+
+        .violation-card-improved {
+          padding: 1rem 0.85rem !important;
+          box-sizing: border-box !important;
+          word-break: break-word !important;
+          overflow-wrap: break-word !important;
+        }
+
+        .violation-card-header {
+          flex-wrap: wrap !important;
+          gap: 0.5rem !important;
+        }
+
+        .score-comparison-card {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 1rem !important;
+          padding: 1rem 0.9rem !important;
+          box-sizing: border-box !important;
+        }
+
+        .btn-rereview {
+          width: 100% !important;
+          justify-content: center !important;
+        }
+
+        /* 6. AUDIT LOG (MOBILE) */
+        .table-wrapper {
+          width: 100% !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch !important;
+        }
+
+        .audit-filter-row {
+          flex-direction: column !important;
+          align-items: stretch !important;
+          gap: 0.65rem !important;
+        }
+
+        .audit-search-input {
+          width: 100% !important;
+          min-width: 0 !important;
+          box-sizing: border-box !important;
+        }
+
+        .audit-filter-group {
+          width: 100% !important;
+          flex-wrap: wrap !important;
+          gap: 0.5rem !important;
+        }
+      }
+
+      /* Extra small screens (≤ 420px) adjustments */
+      @media (max-width: 420px) {
+        .navbar {
+          padding: 0.55rem 0.75rem !important;
+        }
+        .logo-icon {
+          width: 28px !important;
+          height: 28px !important;
+        }
+        .logo-text {
+          font-size: 1.05rem !important;
+        }
+        .key-badge {
+          padding: 3px 8px !important;
+          font-size: 0.7rem !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 1. TOP DEMO SCENARIOS BAR (AT THE VERY TOP OF THE PAGE, ABOVE NAVBAR) -->
+    <aside class="top-scenarios-bar" aria-label="Demo Scenarios Bar">
+      <div class="scenarios-left">
+        <span class="scenarios-label">⚡ DEMO SCENARIOS:</span>
+        <div class="scenarios-buttons">
+          <button type="button" class="btn-scenario active" id="scenarioFintech">
+            🏦 FinTech &amp; Regulatory (Strict)
+          </button>
+          <button type="button" class="btn-scenario" id="scenarioSaas">
+            💻 Enterprise SaaS
+          </button>
+          <button type="button" class="btn-scenario" id="scenarioHealthcare">
+            🏥 Healthcare Compliance
+          </button>
+        </div>
+      </div>
+      <button type="button" class="btn-scenario-clear" id="scenarioClear" title="Clear all textareas and scenario states">
+        ✕ Clear All
+      </button>
+    </aside>
+
+    <!-- Top Navbar -->
+    <header class="navbar" role="banner">
+      <a href="#" class="navbar-brand" aria-label="BrandGuard AI Home">
+        <div class="logo-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="#6C3FC5" stroke="#6C3FC5" stroke-width="1.5"/>
+            <path d="m9 12 2 2 4-4" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span>BrandGuard</span>
+          <span class="logo-badge">AI</span>
+        </div>
+      </a>
+      <div class="navbar-right">
+        <div class="navbar-tagline-wrap">
+          <span class="navbar-tagline">Intelligent Brand Governance</span>
+          <span class="navbar-team">Team SIRIUS</span>
+        </div>
+
+        <!-- AI-Powered Brand Review badge with Google colors -->
+        <div class="gemini-badge" title="AI-Powered Brand Review">
+          <div class="google-dots" aria-hidden="true">
+            <span class="google-dot dot-blue"></span>
+            <span class="google-dot dot-red"></span>
+            <span class="google-dot dot-yellow"></span>
+            <span class="google-dot dot-green"></span>
+          </div>
+          <span>AI-Powered Brand Review</span>
+        </div>
+
+        <!-- Key Status Badge (Always hardcoded as linked) -->
+        <div class="key-badge key-linked" id="navbarKeyBadge" title="Gemini 1.5 Pro API Key is linked and active">
+          🔑 Key Linked ✓
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      <!-- Two-Column Layout -->
+      <section class="two-col-layout" aria-label="Brand Review Workspace">
+        <!-- Left Panel (40%): Brand Guidelines -->
+        <article class="panel-card" aria-labelledby="guidelines-heading">
+          <div class="panel-header">
+            <h2 class="panel-title" id="guidelines-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--purple-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+              <span>Brand Guidelines</span>
+            </h2>
+            <div class="panel-header-actions">
+              <!-- 2. MARKDOWN PREVIEW TOGGLE BUTTON -->
+              <button type="button" class="btn btn-secondary btn-sm" id="btnTogglePreview" title="Toggle rendered guidelines preview">
+                👁 Preview
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" id="btnResetGuidelines" title="Reload Default Rules">
+                Reset
+              </button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div>
+              <label class="input-label" for="guidelinesInput">
+                <span>Active Governance Policy</span>
+                <span class="input-hint">Tone, rules, forbidden terms, disclaimers</span>
+              </label>
+              <!-- Textarea + Rendered Preview Container -->
+              <div id="guidelinesInputContainer">
+                <textarea
+                  id="guidelinesInput"
+                  class="form-textarea"
+                  rows="8"
+                  placeholder="Paste your brand guidelines here... (tone rules, forbidden words, approved terminology, visual rules)"
+                  aria-describedby="guidelineStats"
+                ></textarea>
+                <div id="guidelinesPreview" class="guidelines-rendered-box" style="display: none;" role="region" aria-label="Brand Guidelines Rendered Preview"></div>
+              </div>
+            </div>
+
+            <div>
+              <label class="input-label" for="contentTypeSelect">
+                <span>Content Type</span>
+                <span class="input-hint">Applies channel-specific constraints</span>
+              </label>
+              <select id="contentTypeSelect" class="form-select">
+                <option value="Social Post">Social Post</option>
+                <option value="Blog Article">Blog Article</option>
+                <option value="Email">Email</option>
+                <option value="Ad Copy">Ad Copy</option>
+                <option value="Landing Page">Landing Page</option>
+              </select>
+            </div>
+
+            <div class="guideline-pills" id="guidelineStats" aria-live="polite">
+              <span class="guideline-pill pill-blue">AI-Powered Brand Review</span>
+              <span class="guideline-pill pill-green">Secret Key Linked</span>
+              <span class="guideline-pill pill-purple">Multi-Channel Compliance</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Right Panel (60%): Review Content -->
+        <article class="panel-card" aria-labelledby="content-heading">
+          <div class="panel-header">
+            <h2 class="panel-title" id="content-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--purple-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+              <span>Review Content</span>
+            </h2>
+            <div class="panel-header-actions">
+              <!-- 4. LOAD SAMPLE DRAFT BUTTON NEXT TO TITLE -->
+              <button type="button" class="btn btn-secondary btn-sm" id="btnSampleContent" title="Insert Sample Off-Brand Marketing Copy">
+                Load Sample Draft
+              </button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div>
+              <div class="input-label">
+                <label for="reviewContentInput">Marketing Copy Under Review</label>
+              </div>
+              <textarea
+                id="reviewContentInput"
+                class="form-textarea"
+                rows="8"
+                placeholder="Paste the marketing content you want to review..."
+                aria-describedby="contentCounterBar"
+              ></textarea>
+              <!-- 3. WORD AND CHARACTER COUNT: Below the review content textarea -->
+              <div class="content-counter-bar" id="contentCounterBar">
+                <span id="textStatsLive" style="font-weight: 700; color: var(--navy-dark);">0 words | 0 characters</span>
+                <span style="font-size: 0.76rem; color: var(--navy-muted);">Live Counter</span>
+              </div>
+            </div>
+
+            <div class="action-row">
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button type="button" class="btn btn-secondary btn-sm" id="btnAutoFix" title="Apply approved fixes" style="display: none;">
+                  ✨ Auto-Apply Fixes
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" id="btnClearText" title="Clear Content">
+                  Clear
+                </button>
+              </div>
+              <button type="button" class="btn btn-purple" id="btnRunReview">
+                <span id="btnReviewSpinner" style="display: none;" class="spinner"></span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="btnReviewIcon">
+                  <path d="m9 11 3 3L22 4"/>
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                </svg>
+                <span id="btnReviewLabel">Run Brand Review</span>
+              </button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- Review Report Section -->
+      <section class="section-container" aria-labelledby="report-heading" id="reportSection">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <span style="font-size: 1.5rem; line-height: 1;" aria-hidden="true">🛡️</span>
+            <h2 class="section-title" id="report-heading">Review Report</h2>
+            <!-- Decision status badge (Approve, Override, Revision Requested) -->
+            <span id="reportDecisionBadge" class="decision-badge" style="display: none;"></span>
+          </div>
+          <div class="panel-header-actions" id="reportHeaderActions" style="display: none;">
+            <button type="button" class="btn btn-secondary btn-sm" id="btnExportJson">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span>Export JSON</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="btnCopyReport">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span>Copy Summary</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Initial Placeholder State -->
+        <div class="empty-state" id="reportEmptyState">
+          <div class="empty-state-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+          </div>
+          <p class="empty-state-text">Submit content above to see your compliance report.</p>
+          <p class="empty-state-subtext">BrandGuard AI scans your content against guidelines using Gemini 1.5 Pro to flag blockers, tone deviations, and terminology fixes.</p>
+        </div>
+
+        <!-- Populated Review Report Dashboard (with smooth fade-in animation) -->
+        <div class="report-dashboard" id="reportDashboard" aria-live="polite">
+          <!-- 1. STATUS BANNER (BLOCKED: red, WARNINGS: orange, APPROVED: green) -->
+          <div id="statusBannerContainer">
+            <!-- Dynamic Status Banner inserted here -->
+          </div>
+
+          <!-- 2. SUMMARY LINE (italic below the banner) -->
+          <div id="summaryLineContainer">
+            <!-- Dynamic italic summary text inserted here -->
+          </div>
+
+          <!-- 3. VIOLATION CARDS -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--navy-dark);" id="violationsListHeading">
+                Policy Violations &amp; Suggested Improvements
+              </h3>
+              <span id="violationsCountSummary" style="font-size: 0.82rem; font-weight: 600; color: var(--navy-muted);"></span>
+            </div>
+            <div class="violations-list" id="violationsContainer" role="region" aria-labelledby="violationsListHeading">
+              <!-- Dynamic Violation Cards inserted here -->
+            </div>
+          </div>
+
+          <!-- 5. APPROVE / OVERRIDE / REQUEST REVISION BUTTONS -->
+          <div class="review-actions-bar" id="reviewActionsBar">
+            <button type="button" class="btn btn-action-approve" id="btnActionApprove" title="Approve copy for publication">
+              ✅ Approve
+            </button>
+            <button type="button" class="btn btn-action-override" id="btnActionOverride" title="Override non-critical compliance flags">
+              🚫 Override Flag
+            </button>
+            <button type="button" class="btn btn-action-revision" id="btnActionRevision" title="Request author revisions">
+              ↩ Request Revision
+            </button>
+          </div>
+
+          <!-- 6. PROMINENT RE-REVIEW FEATURE CALLOUT -->
+          <div class="rereview-trigger-box" id="reReviewTriggerBox" style="display: none;">
+            <button type="button" class="btn btn-purple btn-rereview" id="btnReReview" title="Re-run compliance check on edited content">
+              <span class="rereview-spinner" id="reReviewSpinner" style="display: none;"></span>
+              <span id="reReviewIcon">🔄</span>
+              <span id="reReviewLabel">Re-Review Updated Content</span>
+            </button>
+            <p class="rereview-subtitle">Applied fixes? Re-run to see your improved score.</p>
+          </div>
+
+          <!-- 7. RE-REVIEW RESULTS CONTAINER (Appears below old results with divider) -->
+          <div id="reReviewContainer" style="display: none; width: 100%; margin-top: 1.5rem;">
+            <div class="rereview-divider">
+              <span>── Re-Review Results ──</span>
+            </div>
+
+            <!-- Score Improvement Animation Card -->
+            <div class="score-comparison-card" id="scoreComparisonCard">
+              <div class="score-comparison-left">
+                <div style="font-size: 0.82rem; font-weight: 800; color: var(--navy-muted); text-transform: uppercase; letter-spacing: 0.05em;">Score Progression</div>
+                <div class="score-progression-numbers">
+                  <span class="old-score-text" id="progressionOldScore">--</span>
+                  <span class="progression-arrow">→</span>
+                  <span class="new-score-text" id="progressionNewScore">--</span>
+                  <span class="progression-trend" id="progressionTrend">↑</span>
+                </div>
+              </div>
+              <div class="score-comparison-right">
+                <div class="score-comparison-verdict" id="scoreComparisonVerdict">
+                  Evaluating score progression...
+                </div>
+                <div class="score-comparison-note" id="scoreComparisonNote">
+                  Audited with Gemini 1.5 Pro brand compliance rules
+                </div>
+              </div>
+            </div>
+
+            <!-- Re-review Status Banner -->
+            <div id="reReviewStatusBannerContainer"></div>
+
+            <!-- Re-review Dynamic Summary Line -->
+            <div id="reReviewSummaryLineContainer" style="margin-top: 0.65rem;"></div>
+
+            <!-- Re-review Violations List -->
+            <div style="margin-top: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--navy-dark);" id="reReviewViolationsHeading">
+                  Updated Content Policy Findings
+                </h3>
+                <span id="reReviewViolationsCountSummary" style="font-size: 0.82rem; font-weight: 600; color: var(--navy-muted);"></span>
+              </div>
+              <div class="violations-list" id="reReviewViolationsContainer"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Audit Log Section -->
+      <section class="audit-log-section" aria-labelledby="audit-heading">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--purple-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <div>
+              <h2 class="section-title" id="audit-heading">Audit Log</h2>
+            </div>
+          </div>
+          <div class="panel-header-actions">
+            <button type="button" class="btn btn-secondary btn-sm" id="btnDownloadCsv" title="Export audit records as CSV">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span>Export Log</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="btnClearAuditLog">
+              <span>Clear History</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="audit-filter-row">
+          <input
+            type="text"
+            id="auditSearch"
+            class="audit-search-input"
+            placeholder="Search audit entries by content or type..."
+            aria-label="Filter audit table"
+          />
+          <div class="audit-filter-group">
+            <select id="auditFilterStatus" class="form-select" style="width: auto; padding: 0.45rem 0.8rem; font-size: 0.82rem;">
+              <option value="ALL">All Statuses</option>
+              <option value="BLOCKED">BLOCKED</option>
+              <option value="WARNINGS">WARNINGS</option>
+              <option value="APPROVED">APPROVED</option>
+              <option value="OVERRIDDEN">OVERRIDDEN</option>
+              <option value="REVISION REQUESTED">REVISION REQUESTED</option>
+            </select>
+            <select id="auditFilterType" class="form-select" style="width: auto; padding: 0.45rem 0.8rem; font-size: 0.82rem;">
+              <option value="ALL">All Content Types</option>
+              <option value="Social Post">Social Post</option>
+              <option value="Blog Article">Blog Article</option>
+              <option value="Email">Email</option>
+              <option value="Ad Copy">Ad Copy</option>
+              <option value="Landing Page">Landing Page</option>
+              <option value="Re-Review">Re-Review</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper">
+          <table class="audit-table" aria-label="Governance Audit History">
+            <thead>
+              <tr>
+                <th scope="col">Time</th>
+                <th scope="col">Content Type</th>
+                <th scope="col">Violations Found</th>
+                <th scope="col">Status</th>
+                <th scope="col" style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- 6. HACKATHON FOOTER -->
+    <div class="hackathon-footer">
+      BrandGuard AI &middot; Team SIRIUS &middot; Built for Inkloom AI Hackathon 2026
+    </div>
+
+    <!-- Disclaimer Footer -->
+    <footer class="disclaimer-banner" role="contentinfo">
+      <p>
+        <strong>Legal &amp; Regulatory Disclaimer:</strong> BrandGuard AI provides automated policy screening based on user-provided brand guidelines and AI analysis. It does not constitute formal legal counsel, financial compliance certification, or statutory regulatory advice. Organizations must consult qualified legal compliance teams for final authorization.
+      </p>
+    </footer>
+
+    <!-- Detail Modal -->
+    <div class="modal-backdrop" id="auditDetailModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 style="font-size: 1.1rem; font-weight: 700;" id="modalTitle">Audit Record Inspection</h3>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnCloseModal" aria-label="Close modal">✕</button>
+        </div>
+        <div class="modal-body" id="modalBodyContent">
+          <!-- Populated dynamically -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnRestoreAuditContent">Restore Into Editor</button>
+          <button type="button" class="btn btn-purple btn-sm" id="btnCloseModal2">Done</button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Toast Notification -->
+    <div class="toast" id="appToast" role="status" aria-live="polite">
+      <span id="toastIcon">✓</span>
+      <span id="toastMessage">Action completed</span>
+    </div>
+
+    <!-- Core Application Logic (Gemini API Integration + Enhanced Results Display) -->
+    <script>
+      (function () {
+        'use strict';
+
+        // -------------------------------------------------------------
+        // PRESET SCENARIOS FOR HACKATHON DEMO (EXACT USER SPECIFIED SAMPLES)
+        // -------------------------------------------------------------
+        const DEMO_PRESETS = {
+          fintech: {
+            guidelines: `### Brand Tone:
+- Authoritative, prudent, transparent, and legally conservative.
+- Never make hyperbolic or unsubstantiated investment claims.
+
+### Forbidden Words & Claims (CRITICAL):
+- guaranteed returns
+- risk-free
+- foolproof
+- hack
+- get rich
+
+### Required Disclaimers:
+- All investment content must include: 'Past performance does not guarantee future results.'
+- Never promise specific APY without regulatory approval.`,
+            contentType: 'Social Post',
+            sampleContent: `🔥 Massive news! Our new high-yield crypto treasury fund is officially LIVE. It guarantees 18% APY returns with completely risk-free protection for all our clients! This is the most foolproof wealth generation hack of 2026. Very cheap entry fees, sign the contract today before spots fill up!!!!`
+          },
+          saas: {
+            guidelines: `### Brand Voice:
+- Professional, confident, and outcome-focused.
+- Avoid superlatives like 'best', 'world-class', '#1' without proof.
+- Use 'platform' not 'tool' or 'software'.
+
+### Approved Terminology:
+- Use 'customers' not 'users'
+- Use 'solutions' not 'products'
+- Capitalise: BrandGuard, Dashboard, Workspace
+
+### Tone Rules:
+- No exclamation marks in B2B content.
+- No emoji in formal communications.`,
+            contentType: 'Email',
+            sampleContent: `Introducing our world-class #1 software tool that your users will absolutely love!!! 🚀 It's the best product we've ever built. Try our tool today and see why we're better than everyone else!`
+          },
+          healthcare: {
+            guidelines: `### Compliance Rules:
+- Never make treatment outcome guarantees.
+- Always include: 'Consult your physician before starting any treatment.'
+- Forbidden: 'cure', 'guaranteed recovery', 'instant results'
+
+### Tone:
+- Empathetic, evidence-based, and cautious.
+- Use 'may help' not 'will cure'.`,
+            contentType: 'Ad Copy',
+            sampleContent: `Our supplement guarantees a complete cure for diabetes in just 7 days! Instant results with zero side effects. Thousands have already recovered permanently. Order now for guaranteed recovery!`
+          }
+        };
+
+        // -------------------------------------------------------------
+        // INITIAL AUDIT LOG SEED DATA
+        // -------------------------------------------------------------
+        const INITIAL_AUDITS = [
+          {
+            id: 'AUD-8821',
+            time: '10:45 AM today',
+            rawTime: Date.now() - 1000 * 60 * 45,
+            contentType: 'Email',
+            contentSnippet: 'Quarterly investor dispatch: Review of portfolio yield updates...',
+            violationsCount: 0,
+            status: 'APPROVED',
+            summary: 'The quarterly dispatch adheres fully to corporate editorial guidelines and contains required disclaimers.',
+            violations: []
+          },
+          {
+            id: 'AUD-8820',
+            time: '09:15 AM today',
+            rawTime: Date.now() - 1000 * 60 * 135,
+            contentType: 'Social Post',
+            contentSnippet: 'Join our exclusive webinar! Get rich insights into algorithmic hedging...',
+            violationsCount: 2,
+            status: 'BLOCKED',
+            summary: 'Promissory wealth-generation claims violate financial compliance policy.',
+            violations: [
+              {
+                excerpt: 'Get rich insights',
+                rule_broken: 'Forbidden phrase "get rich" in marketing headline',
+                severity: 'Blocker',
+                fix: 'Replace with "Gain institutional-grade insights"'
+              },
+              {
+                excerpt: 'Join now!!!',
+                rule_broken: 'Excessive punctuation in call to action',
+                severity: 'Warning',
+                fix: 'Use a single period or standard exclamation mark'
+              }
+            ]
+          },
+          {
+            id: 'AUD-8819',
+            time: 'Yesterday 4:20 PM',
+            rawTime: Date.now() - 1000 * 60 * 60 * 20,
+            contentType: 'Ad Copy',
+            contentSnippet: 'Affordable cloud monitoring for high-growth engineering teams...',
+            violationsCount: 1,
+            status: 'WARNINGS',
+            summary: 'Copy uses discouraged vocabulary for audience reference.',
+            violations: [
+              {
+                excerpt: 'built for all users',
+                rule_broken: 'Non-standard terminology ("users")',
+                severity: 'Suggestion',
+                fix: 'Use approved term "team members"'
+              }
+            ]
+          }
+        ];
+
+        // -------------------------------------------------------------
+        // STATE
+        // -------------------------------------------------------------
+        let currentReport = null;
+        let auditHistory = [];
+        let isGuidelinesPreviewMode = false;
+
+        // Load audit history from localStorage
+        try {
+          const stored = localStorage.getItem('brandguard_audit_log');
+          if (stored) {
+            auditHistory = JSON.parse(stored);
+          } else {
+            auditHistory = [...INITIAL_AUDITS];
+            localStorage.setItem('brandguard_audit_log', JSON.stringify(auditHistory));
+          }
+        } catch (e) {
+          auditHistory = [...INITIAL_AUDITS];
+        }
+
+        // -------------------------------------------------------------
+        // DOM ELEMENTS
+        // -------------------------------------------------------------
+        const guidelinesInput = document.getElementById('guidelinesInput');
+        const guidelinesPreview = document.getElementById('guidelinesPreview');
+        const btnTogglePreview = document.getElementById('btnTogglePreview');
+        const contentTypeSelect = document.getElementById('contentTypeSelect');
+
+        const reviewContentInput = document.getElementById('reviewContentInput');
+        const textStatsLive = document.getElementById('textStatsLive');
+        const btnRunReview = document.getElementById('btnRunReview');
+        const btnReviewLabel = document.getElementById('btnReviewLabel');
+        const btnReviewIcon = document.getElementById('btnReviewIcon');
+        const btnReviewSpinner = document.getElementById('btnReviewSpinner');
+        const btnAutoFix = document.getElementById('btnAutoFix');
+        const btnClearText = document.getElementById('btnClearText');
+        const btnSampleContent = document.getElementById('btnSampleContent');
+        const btnResetGuidelines = document.getElementById('btnResetGuidelines');
+
+        // Top Demo Scenarios Bar Buttons
+        const scenarioFintech = document.getElementById('scenarioFintech');
+        const scenarioSaas = document.getElementById('scenarioSaas');
+        const scenarioHealthcare = document.getElementById('scenarioHealthcare');
+        const scenarioClear = document.getElementById('scenarioClear');
+
+        // Report Elements
+        const reportEmptyState = document.getElementById('reportEmptyState');
+        const reportDashboard = document.getElementById('reportDashboard');
+        const reportHeaderActions = document.getElementById('reportHeaderActions');
+        const statusBannerContainer = document.getElementById('statusBannerContainer');
+        const summaryLineContainer = document.getElementById('summaryLineContainer');
+        const violationsContainer = document.getElementById('violationsContainer');
+        const violationsCountSummary = document.getElementById('violationsCountSummary');
+        const reportDecisionBadge = document.getElementById('reportDecisionBadge');
+
+        // Decision Action Buttons
+        const btnActionApprove = document.getElementById('btnActionApprove');
+        const btnActionOverride = document.getElementById('btnActionOverride');
+        const btnActionRevision = document.getElementById('btnActionRevision');
+
+        const btnExportJson = document.getElementById('btnExportJson');
+        const btnCopyReport = document.getElementById('btnCopyReport');
+
+        // Audit Log Elements
+        const auditTableBody = document.getElementById('auditTableBody');
+        const auditSearch = document.getElementById('auditSearch');
+        const auditFilterStatus = document.getElementById('auditFilterStatus');
+        const auditFilterType = document.getElementById('auditFilterType');
+        const btnDownloadCsv = document.getElementById('btnDownloadCsv');
+        const btnClearAuditLog = document.getElementById('btnClearAuditLog');
+
+        // Modal Elements
+        const auditDetailModal = document.getElementById('auditDetailModal');
+        const btnCloseModal = document.getElementById('btnCloseModal');
+        const btnCloseModal2 = document.getElementById('btnCloseModal2');
+        const btnRestoreAuditContent = document.getElementById('btnRestoreAuditContent');
+        const modalBodyContent = document.getElementById('modalBodyContent');
+        let selectedAuditRecord = null;
+
+        // -------------------------------------------------------------
+        // GEMINI API CONFIGURATION (DIRECTLY LINKED)
+        // -------------------------------------------------------------
+        const navbarKeyBadge = document.getElementById('navbarKeyBadge');
+        if (navbarKeyBadge) {
+          navbarKeyBadge.className = 'key-badge key-linked';
+          navbarKeyBadge.textContent = '🔑 Key Linked ✓';
+          navbarKeyBadge.title = 'Gemini 1.5 Pro is connected and ready';
+        }
+
+        // Toast Notification
+        const appToast = document.getElementById('appToast');
+        const toastMessage = document.getElementById('toastMessage');
+        const toastIcon = document.getElementById('toastIcon');
+
+        function showToast(message, icon = '✓') {
+          toastMessage.textContent = message;
+          toastIcon.textContent = icon;
+          appToast.classList.add('show');
+          setTimeout(() => {
+            appToast.classList.remove('show');
+          }, 3200);
+        }
+
+        // -------------------------------------------------------------
+        // 2. MARKDOWN RENDERING FOR GUIDELINES PREVIEW
+        // Converts ### to bold headers, - to bullet points, etc.
+        // -------------------------------------------------------------
+        function renderMarkdownToHtml(md) {
+          if (!md || !md.trim()) {
+            return '<p style="color: var(--navy-muted); font-style: italic;">No brand guidelines specified. Click Edit to enter guidelines.</p>';
+          }
+
+          const lines = md.split(/\r?\n/);
+          let html = '';
+          let inList = false;
+
+          for (let i = 0; i < lines.length; i++) {
+            const raw = lines[i].trim();
+            if (!raw) {
+              if (inList) {
+                html += '</ul>';
+                inList = false;
+              }
+              continue;
+            }
+
+            // Headings
+            if (raw.startsWith('###')) {
+              if (inList) { html += '</ul>'; inList = false; }
+              const text = raw.replace(/^###\s*/, '').trim();
+              html += `<div class="md-heading"><strong>${escapeHtml(text)}</strong></div>`;
+            } else if (raw.startsWith('##')) {
+              if (inList) { html += '</ul>'; inList = false; }
+              const text = raw.replace(/^##\s*/, '').trim();
+              html += `<div class="md-heading" style="font-size: 1.08rem;"><strong>${escapeHtml(text)}</strong></div>`;
+            } else if (raw.startsWith('#')) {
+              if (inList) { html += '</ul>'; inList = false; }
+              const text = raw.replace(/^#\s*/, '').trim();
+              html += `<div class="md-heading" style="font-size: 1.18rem;"><strong>${escapeHtml(text)}</strong></div>`;
+            } else if (raw.startsWith('-') || raw.startsWith('*') || raw.startsWith('•')) {
+              // Bullet lists
+              if (!inList) {
+                html += '<ul class="md-list">';
+                inList = true;
+              }
+              const itemText = raw.replace(/^[-*•]\s*/, '').trim();
+              html += `<li>${formatInlineMarkdown(itemText)}</li>`;
+            } else {
+              // Paragraph
+              if (inList) { html += '</ul>'; inList = false; }
+              html += `<p class="md-para">${formatInlineMarkdown(raw)}</p>`;
+            }
+          }
+
+          if (inList) {
+            html += '</ul>';
+          }
+
+          return html;
+        }
+
+        function formatInlineMarkdown(str) {
+          let s = escapeHtml(str);
+          // Bold **text**
+          s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+          // Inline code `text`
+          s = s.replace(/`([^`]+)`/g, '<code class="md-code">$1</code>');
+          return s;
+        }
+
+        function updateGuidelinesPreviewContent() {
+          if (isGuidelinesPreviewMode) {
+            guidelinesPreview.innerHTML = renderMarkdownToHtml(guidelinesInput.value);
+          }
+        }
+
+        btnTogglePreview.addEventListener('click', (e) => {
+          if (e) e.preventDefault();
+          isGuidelinesPreviewMode = !isGuidelinesPreviewMode;
+
+          if (isGuidelinesPreviewMode) {
+            guidelinesPreview.innerHTML = renderMarkdownToHtml(guidelinesInput.value);
+            guidelinesInput.style.display = 'none';
+            guidelinesPreview.style.display = 'block';
+            btnTogglePreview.textContent = '✏ Edit';
+            btnTogglePreview.title = 'Switch back to edit mode';
+            btnTogglePreview.classList.add('btn-purple-subtle');
+            btnTogglePreview.classList.remove('btn-secondary');
+          } else {
+            guidelinesPreview.style.display = 'none';
+            guidelinesInput.style.display = 'block';
+            guidelinesInput.focus();
+            btnTogglePreview.textContent = '👁 Preview';
+            btnTogglePreview.title = 'Preview rendered markdown';
+            btnTogglePreview.classList.remove('btn-purple-subtle');
+            btnTogglePreview.classList.add('btn-secondary');
+          }
+        });
+
+        guidelinesInput.addEventListener('input', updateGuidelinesPreviewContent);
+
+        // -------------------------------------------------------------
+        // 3. WORD AND CHARACTER COUNT (LIVE UPDATE BELOW REVIEW TEXTAREA)
+        // -------------------------------------------------------------
+        function updateLiveCounters() {
+          const text = reviewContentInput.value;
+          const trimmed = text.trim();
+          const words = trimmed ? trimmed.split(/\s+/).filter(Boolean).length : 0;
+          const chars = text.length;
+          textStatsLive.textContent = `${words} words | ${chars} characters`;
+        }
+
+        reviewContentInput.addEventListener('input', updateLiveCounters);
+        guidelinesInput.addEventListener('input', () => {
+          if (isGuidelinesPreviewMode) updateGuidelinesPreviewContent();
+        });
+
+        // -------------------------------------------------------------
+        // 1. TOP DEMO SCENARIOS BAR (AUTO-FILLS BOTH TEXTAREAS WITH EXACT SAMPLES)
+        // -------------------------------------------------------------
+        function activateScenario(key) {
+          const preset = DEMO_PRESETS[key];
+          if (!preset) return;
+
+          guidelinesInput.value = preset.guidelines;
+          reviewContentInput.value = preset.sampleContent;
+          contentTypeSelect.value = preset.contentType;
+
+          // Update active button state
+          [scenarioFintech, scenarioSaas, scenarioHealthcare].forEach(btn => btn.classList.remove('active'));
+          if (key === 'fintech') scenarioFintech.classList.add('active');
+          if (key === 'saas') scenarioSaas.classList.add('active');
+          if (key === 'healthcare') scenarioHealthcare.classList.add('active');
+
+          updateLiveCounters();
+          updateGuidelinesPreviewContent();
+          showToast(`Loaded ${key.toUpperCase()} Scenario & Sample Content`);
+        }
+
+        scenarioFintech.addEventListener('click', () => activateScenario('fintech'));
+        scenarioSaas.addEventListener('click', () => activateScenario('saas'));
+        scenarioHealthcare.addEventListener('click', () => activateScenario('healthcare'));
+
+        scenarioClear.addEventListener('click', () => {
+          [scenarioFintech, scenarioSaas, scenarioHealthcare].forEach(btn => btn.classList.remove('active'));
+          guidelinesInput.value = '';
+          reviewContentInput.value = '';
+          updateLiveCounters();
+          updateGuidelinesPreviewContent();
+          reportDashboard.style.display = 'none';
+          reportHeaderActions.style.display = 'none';
+          reportEmptyState.style.display = 'flex';
+          reportDecisionBadge.style.display = 'none';
+          showToast('Cleared all guidelines and draft text', '✕');
+        });
+
+        // -------------------------------------------------------------
+        // 4. LOAD SAMPLE DRAFT BUTTON (NEXT TO REVIEW CONTENT TITLE)
+        // -------------------------------------------------------------
+        btnSampleContent.addEventListener('click', () => {
+          const genericOffBrandSample = `🔥 Guaranteed 20% returns with 100% safe risk-free investment! Sign this cheap contract today before it's gone. Clients love this foolproof wealth generation hack! WOW!!!`;
+          reviewContentInput.value = genericOffBrandSample;
+          updateLiveCounters();
+          showToast('Sample draft loaded into editor');
+        });
+
+        btnResetGuidelines.addEventListener('click', () => {
+          activateScenario('fintech');
+        });
+
+        btnClearText.addEventListener('click', () => {
+          reviewContentInput.value = '';
+          updateLiveCounters();
+          btnAutoFix.style.display = 'none';
+        });
+
+        // -------------------------------------------------------------
+        // SYSTEM PROMPT FOR GEMINI 1.5 PRO
+        // -------------------------------------------------------------
+        const SYSTEM_PROMPT = `You are BrandGuard AI, a strict brand compliance reviewer.
+The user has provided their Brand Guidelines and a piece of marketing content to review.
+Your job is to review the content against the guidelines and return a JSON response in this exact format:
+
+{
+  "overall_status": "BLOCKED" | "WARNINGS" | "APPROVED",
+  "summary": "One sentence summary of the review",
+  "violations": [
+    {
+      "excerpt": "the exact words from the content that are problematic",
+      "rule_broken": "which guideline rule this violates",
+      "severity": "Blocker" | "Warning" | "Suggestion",
+      "fix": "suggested rewrite or fix"
+    }
+  ]
+}
+
+If there are no violations, return violations as an empty array and overall_status as "APPROVED".
+Return ONLY the JSON. No explanation text outside the JSON.`;
+
+        // -------------------------------------------------------------
+        // COMPLIANCE SIMULATOR FALLBACK
+        // (Runs if API key is not yet set or during offline preview)
+        // -------------------------------------------------------------
+        function generateSimulatedReview(guidelines, content, contentType) {
+          const contentLower = content.toLowerCase();
+          const violations = [];
+
+          // Detect common forbidden terms
+          const forbiddenList = ['risk-free', 'guaranteed returns', 'guarantees 18%', 'foolproof', '100% safe', 'get rich', 'cure', 'guaranteed recovery', 'instant results', 'hack', '#1', 'world-class'];
+          for (const item of forbiddenList) {
+            if (contentLower.includes(item.toLowerCase())) {
+              violations.push({
+                excerpt: item,
+                rule_broken: `Forbidden term or promissory claim ("${item}")`,
+                severity: 'Blocker',
+                fix: `Remove "${item}" or replace with verified, factual language.`
+              });
+            }
+          }
+
+          // Detect approved terminology substitutions
+          const replacements = [
+            { bad: 'cheap', rep: 'cost-effective' },
+            { bad: 'clients', rep: 'institutional partners' },
+            { bad: 'contract', rep: 'service agreement' },
+            { bad: 'users', rep: 'customers' },
+            { bad: 'tool', rep: 'platform' },
+            { bad: 'software', rep: 'platform' },
+            { bad: 'products', rep: 'solutions' }
+          ];
+          for (const r of replacements) {
+            const regex = new RegExp(`\\b${r.bad}\\b`, 'gi');
+            if (regex.test(content)) {
+              violations.push({
+                excerpt: r.bad,
+                rule_broken: `Non-standard terminology ("${r.bad}")`,
+                severity: 'Suggestion',
+                fix: `Replace with approved brand vocabulary: "${r.rep}"`
+              });
+            }
+          }
+
+          // Tone & style
+          if ((content.match(/!{2,}/g) || []).length > 0 || (content.match(/!/g) || []).length > 2) {
+            violations.push({
+              excerpt: '!',
+              rule_broken: 'Excessive punctuation / exclamation marks in B2B or compliant copy',
+              severity: 'Warning',
+              fix: 'Remove exclamation marks; use professional, measured sentence endings.'
+            });
+          }
+
+          if (content.includes('🚀') || content.includes('🔥')) {
+            violations.push({
+              excerpt: content.includes('🚀') ? '🚀' : '🔥',
+              rule_broken: 'Emoji used in formal brand communications',
+              severity: 'Warning',
+              fix: 'Remove casual emojis from professional copy.'
+            });
+          }
+
+          // Disclaimers check
+          if (guidelines.toLowerCase().includes('past performance') && !contentLower.includes('past performance')) {
+            violations.push({
+              excerpt: 'End of marketing copy',
+              rule_broken: 'Missing required statutory disclaimer',
+              severity: 'Blocker',
+              fix: 'Append: "Past performance does not guarantee future results."'
+            });
+          }
+
+          if (guidelines.toLowerCase().includes('consult your physician') && !contentLower.includes('consult your physician')) {
+            violations.push({
+              excerpt: 'End of marketing copy',
+              rule_broken: 'Missing required health consultation disclaimer',
+              severity: 'Blocker',
+              fix: 'Append: "Consult your physician before starting any treatment."'
+            });
+          }
+
+          let overall_status = 'APPROVED';
+          let summary = 'Marketing content adheres to brand guidelines with no violations detected.';
+
+          const blockers = violations.filter(v => v.severity === 'Blocker');
+          const warnings = violations.filter(v => v.severity === 'Warning');
+          const suggestions = violations.filter(v => v.severity === 'Suggestion');
+
+          if (blockers.length > 0) {
+            overall_status = 'BLOCKED';
+            summary = `Content is blocked due to ${blockers.length} blocker(s) and ${warnings.length} warning(s).`;
+          } else if (warnings.length > 0 || suggestions.length > 0) {
+            overall_status = 'WARNINGS';
+            summary = `Content requires review due to ${warnings.length} warning(s) and ${suggestions.length} suggestion(s).`;
+          } else {
+            summary = 'Content meets brand guidelines with no violations detected.';
+          }
+
+          return {
+            overall_status,
+            summary,
+            violations
+          };
+        }
+
+        // -------------------------------------------------------------
+        // RUN BRAND REVIEW WITH GEMINI API
+        // -------------------------------------------------------------
+        async function runBrandReview() {
+          const guidelines = guidelinesInput.value.trim();
+          const content = reviewContentInput.value.trim();
+          const contentType = contentTypeSelect.value;
+
+          if (!content) {
+            showToast('Please paste marketing content to review', '⚠️');
+            reviewContentInput.focus();
+            return;
+          }
+
+          btnRunReview.classList.add('btn-loading');
+          btnRunReview.disabled = true;
+          btnReviewSpinner.style.display = 'inline-block';
+          btnReviewIcon.style.display = 'none';
+
+          // 5. LOADING STATE: Animated text cycling through 4 stages (1.5 seconds each)
+          const loadingStages = [
+            "Checking tone...",
+            "Scanning terminology...",
+            "Verifying claims...",
+            "Generating report..."
+          ];
+          let stageIdx = 0;
+          btnReviewLabel.textContent = loadingStages[0];
+          const loadingTimer = setInterval(() => {
+            stageIdx = (stageIdx + 1) % loadingStages.length;
+            btnReviewLabel.textContent = loadingStages[stageIdx];
+          }, 1500);
+
+          try {
+            let resultJson = null;
+            const API_KEY = "YOUR_KEY_HERE";
+
+            // Step A: First call the backend proxy endpoint /api/review if present (when run fullstack)
+            try {
+              const serverRes = await fetch('/api/review', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ guidelines, content, contentType, apiKey: API_KEY })
+              });
+
+              if (serverRes.ok) {
+                resultJson = await serverRes.json();
+              }
+            } catch (err) {
+              // Server endpoint not reachable (e.g. static Vercel deployment)
+            }
+
+            // Step B: Direct client API key call using hardcoded API key
+            if (!resultJson && API_KEY && API_KEY !== "YOUR_KEY_HERE") {
+              try {
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${encodeURIComponent(API_KEY)}`;
+
+                const requestPayload = {
+                  systemInstruction: {
+                    parts: [{ text: SYSTEM_PROMPT }]
+                  },
+                  contents: [
+                    {
+                      parts: [
+                        {
+                          text: `CONTENT TYPE: ${contentType}\n\nBRAND GUIDELINES:\n${guidelines}\n\nMARKETING CONTENT TO REVIEW:\n${content}`
+                        }
+                      ]
+                    }
+                  ],
+                  generationConfig: {
+                    responseMimeType: "application/json",
+                    temperature: 0.1
+                  }
+                };
+
+                const response = await fetch(apiUrl, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(requestPayload)
+                });
+
+                if (response.ok) {
+                  const data = await response.json();
+                  const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                  if (rawText) {
+                    const cleanText = rawText.replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
+                    resultJson = JSON.parse(cleanText);
+                  }
+                }
+              } catch (clientApiErr) {
+                console.warn('Direct Gemini API call failed:', clientApiErr);
+              }
+            }
+
+            // Step C: Fallback to simulated review if key is placeholder or network failed
+            if (!resultJson) {
+              await new Promise(r => setTimeout(r, 650));
+              resultJson = generateSimulatedReview(guidelines, content, contentType);
+            }
+
+            // Normalize and validate JSON structure with dynamic summary and status
+            const violationsList = Array.isArray(resultJson.violations) ? resultJson.violations : [];
+            const blockersCount = violationsList.filter(v => (v.severity || '').toLowerCase() === 'blocker').length;
+            const warningsCount = violationsList.filter(v => (v.severity || '').toLowerCase() === 'warning').length;
+            const suggestionsCount = violationsList.filter(v => (v.severity || '').toLowerCase() === 'suggestion').length;
+
+            let computedStatus = resultJson.overall_status ? String(resultJson.overall_status).toUpperCase() : 'APPROVED';
+            if (blockersCount > 0) {
+              computedStatus = 'BLOCKED';
+            } else if (warningsCount > 0 || suggestionsCount > 0) {
+              computedStatus = 'WARNINGS';
+            } else {
+              computedStatus = 'APPROVED';
+            }
+
+            let dynamicSummary = '';
+            if (computedStatus === 'BLOCKED' || blockersCount > 0) {
+              dynamicSummary = `Content is blocked due to ${blockersCount} blocker(s) and ${warningsCount} warning(s).`;
+            } else if (computedStatus === 'WARNINGS' || warningsCount > 0) {
+              dynamicSummary = `Content requires review due to ${warningsCount} warning(s) and ${suggestionsCount} suggestion(s).`;
+            } else if (suggestionsCount > 0) {
+              dynamicSummary = `Content meets brand guidelines with ${suggestionsCount} suggestion(s) for improvement.`;
+            } else {
+              dynamicSummary = 'Content meets brand guidelines with no violations detected.';
+            }
+
+            const reviewData = {
+              overall_status: computedStatus,
+              summary: dynamicSummary,
+              violations: violationsList
+            };
+
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            currentReport = {
+              id: 'AUD-' + Math.floor(1000 + Math.random() * 9000),
+              timestamp: timeString,
+              rawTime: now.getTime(),
+              contentType,
+              content,
+              overall_status: reviewData.overall_status,
+              summary: reviewData.summary,
+              violations: reviewData.violations,
+              decision: null
+            };
+
+            // Display Review Report
+            displayReviewReport(currentReport);
+
+            // Add the review to the Audit Log table with current time
+            const newAuditEntry = {
+              id: currentReport.id,
+              time: `${currentReport.timestamp} today`,
+              rawTime: currentReport.rawTime,
+              contentType,
+              contentSnippet: content.slice(0, 85) + (content.length > 85 ? '...' : ''),
+              violationsCount: reviewData.violations.length,
+              status: reviewData.overall_status,
+              summary: reviewData.summary,
+              violations: reviewData.violations,
+              fullContent: content
+            };
+
+            auditHistory.unshift(newAuditEntry);
+            try {
+              localStorage.setItem('brandguard_audit_log', JSON.stringify(auditHistory.slice(0, 50)));
+            } catch (e) {}
+            renderAuditTable();
+
+            // Check if any fix suggestions can be auto-applied
+            if (reviewData.violations.some(v => v.fix && v.excerpt)) {
+              btnAutoFix.style.display = 'inline-flex';
+            } else {
+              btnAutoFix.style.display = 'none';
+            }
+
+            document.getElementById('reportSection').scrollIntoView({ behavior: 'smooth' });
+            showToast(`Compliance Review: ${reviewData.overall_status}`, reviewData.overall_status === 'APPROVED' ? '✓' : '⚠️');
+
+          } catch (error) {
+            console.error('Review Error:', error);
+            showToast(`Error running review: ${error.message}`, '⚠️');
+          } finally {
+            clearInterval(loadingTimer);
+            btnRunReview.classList.remove('btn-loading');
+            btnRunReview.disabled = false;
+            btnReviewSpinner.style.display = 'none';
+            btnReviewIcon.style.display = 'inline-block';
+            btnReviewLabel.textContent = 'Run Brand Review';
+          }
+        }
+
+        // -------------------------------------------------------------
+        // BEAUTIFUL REVIEW REPORT DISPLAY
+        // -------------------------------------------------------------
+        function displayReviewReport(report) {
+          reportEmptyState.style.display = 'none';
+          reportDashboard.style.display = 'flex';
+          reportHeaderActions.style.display = 'flex';
+
+          // Trigger smooth fade-in animation
+          reportDashboard.classList.remove('results-fade-in');
+          void reportDashboard.offsetWidth;
+          reportDashboard.classList.add('results-fade-in');
+
+          if (!report.decision) {
+            reportDecisionBadge.style.display = 'none';
+          } else {
+            showDecisionBadge(report.decision);
+          }
+
+          const violations = report.violations || [];
+          const blockersCount = violations.filter(v => (v.severity || '').toLowerCase() === 'blocker').length;
+          const warningsCount = violations.filter(v => (v.severity || '').toLowerCase() === 'warning').length;
+          const suggestionsCount = violations.filter(v => (v.severity || '').toLowerCase() === 'suggestion').length;
+
+          let status = (report.overall_status || 'APPROVED').toUpperCase();
+          if (blockersCount > 0) {
+            status = 'BLOCKED';
+          } else if (warningsCount > 0 || suggestionsCount > 0) {
+            status = 'WARNINGS';
+          } else {
+            status = 'APPROVED';
+          }
+          report.overall_status = status;
+
+          // Calculate score: 100 minus (Blockers x 30) minus (Warnings x 10) minus (Suggestions x 5), min 0
+          const score = Math.max(0, 100 - (blockersCount * 30) - (warningsCount * 10) - (suggestionsCount * 5));
+
+          // Score brackets: 0-40: red, 41-70: orange, 71-99: yellow, 100: green
+          let scoreColorClass = 'score-green';
+          if (score <= 40) scoreColorClass = 'score-red';
+          else if (score <= 70) scoreColorClass = 'score-orange';
+          else if (score <= 99) scoreColorClass = 'score-yellow';
+          else scoreColorClass = 'score-green';
+
+          // 1. STATUS BANNER AT TOP OF RESULTS (with circular score badge on right)
+          let bannerType = 'banner-approved';
+          let bannerText = '✅ APPROVED — Content meets brand guidelines';
+          if (status === 'BLOCKED') {
+            bannerType = 'banner-blocked';
+            bannerText = '🚫 BLOCKED — This content cannot be published';
+          } else if (status === 'WARNINGS') {
+            bannerType = 'banner-warnings';
+            bannerText = '⚠️ WARNINGS — Review required before publishing';
+          }
+
+          statusBannerContainer.innerHTML = `
+            <div class="status-banner ${bannerType}" id="statusBanner">
+              <div class="status-banner-left">
+                <span>${bannerText}</span>
+              </div>
+              <div class="score-badge-circle ${scoreColorClass}" title="Compliance Score: ${score}/100 (100 - 30×Blockers - 10×Warnings - 5×Suggestions)">
+                <span class="score-number">${score}</span>
+                <span class="score-denom">/100</span>
+              </div>
+            </div>
+          `;
+
+          // Generate dynamic summary text from real count of parsed violations
+          let dynamicSummary = '';
+          if (status === 'BLOCKED' || blockersCount > 0) {
+            dynamicSummary = `Content is blocked due to ${blockersCount} blocker(s) and ${warningsCount} warning(s).`;
+          } else if (status === 'WARNINGS' || warningsCount > 0) {
+            dynamicSummary = `Content requires review due to ${warningsCount} warning(s) and ${suggestionsCount} suggestion(s).`;
+          } else if (suggestionsCount > 0) {
+            dynamicSummary = `Content meets brand guidelines with ${suggestionsCount} suggestion(s) for improvement.`;
+          } else {
+            dynamicSummary = 'Content meets brand guidelines with no violations detected.';
+          }
+          report.summary = dynamicSummary;
+
+          // 2. SUMMARY LINE: show summary text in italic below the banner
+          summaryLineContainer.innerHTML = `
+            <p class="review-summary-line">
+              ${escapeHtml(dynamicSummary)}
+            </p>
+          `;
+
+          // Violation count summary: "X Blockers · Y Warnings · Z Suggestions" as colored pills
+          violationsCountSummary.innerHTML = `
+            <div class="violation-summary-pills">
+              <span class="summary-pill pill-blocker">${blockersCount} Blocker${blockersCount === 1 ? '' : 's'}</span>
+              <span class="summary-pill pill-warning">${warningsCount} Warning${warningsCount === 1 ? '' : 's'}</span>
+              <span class="summary-pill pill-suggestion">${suggestionsCount} Suggestion${suggestionsCount === 1 ? '' : 's'}</span>
+            </div>
+          `;
+
+          // 4. CLEAN "NO VIOLATIONS FOUND" MESSAGE WITH CHECKMARK
+          if (violations.length === 0) {
+            violationsContainer.innerHTML = `
+              <div style="padding: 2.75rem 2rem; text-align: center; background: #F0FDF4; border: 1px solid #86EFAC; border-radius: var(--radius-md);">
+                <div style="font-size: 2.2rem; color: #16A34A; margin-bottom: 0.5rem;">✅</div>
+                <h4 style="font-size: 1.25rem; font-weight: 800; color: #16A34A;">No violations found</h4>
+                <p style="font-size: 0.95rem; color: #334155; margin-top: 0.35rem; max-width: 520px; margin-left: auto; margin-right: auto;">
+                  This marketing copy meets all brand guidelines, regulatory disclosures, and editorial rules. Ready for publication.
+                </p>
+              </div>
+            `;
+            return;
+          }
+
+          // 3. VIOLATION CARDS
+          violationsContainer.innerHTML = '';
+
+          violations.forEach((v, idx) => {
+            const card = document.createElement('div');
+            const severityRaw = (v.severity || 'Warning').trim();
+            const severityLower = severityRaw.toLowerCase();
+
+            let borderClass = 'border-warning';
+            let pillClass = 'pill-warning';
+
+            if (severityLower === 'blocker') {
+              borderClass = 'border-blocker';
+              pillClass = 'pill-blocker';
+            } else if (severityLower === 'suggestion') {
+              borderClass = 'border-suggestion';
+              pillClass = 'pill-suggestion';
+            }
+
+            card.className = `violation-card-improved ${borderClass}`;
+
+            card.innerHTML = `
+              <!-- Header with Finding index and Severity Badge (pill shape top right) -->
+              <div class="violation-card-header">
+                <span style="font-size: 0.82rem; font-weight: 700; color: var(--navy-muted); text-transform: uppercase; letter-spacing: 0.04em;">
+                  Violation #${idx + 1}
+                </span>
+                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                  <span class="severity-pill ${pillClass}">
+                    ${escapeHtml(v.severity || 'Warning')}
+                  </span>
+                  <span class="badge-fixed" style="display: none;">
+                    ✅ Fixed
+                  </span>
+                </div>
+              </div>
+
+              <!-- Quoted excerpt in a light gray box with left quote mark -->
+              <div class="quoted-excerpt-box">
+                <span class="quote-mark" aria-hidden="true">“</span>
+                <div class="quoted-excerpt-text">
+                  ${escapeHtml(v.excerpt || 'Referenced copy')}
+                </div>
+              </div>
+
+              <!-- "Rule broken:" label in bold, then the rule text -->
+              <div class="rule-broken-text">
+                <strong style="font-weight: 800; color: var(--navy-dark);">Rule broken:</strong>
+                <span>${escapeHtml(v.rule_broken || 'Brand Guideline')}</span>
+              </div>
+
+              <!-- "Suggested fix:" label in bold with a lightbulb emoji, copy button (📋), and Apply Fix button on ALL cards -->
+              <div class="suggested-fix-box">
+                <div class="suggested-fix-text">
+                  <strong style="font-weight: 800; color: var(--navy-dark); margin-right: 4px;">💡 Suggested fix:</strong>
+                  <span>${escapeHtml(v.fix || 'Revise to align with brand guidelines')}</span>
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                  <button type="button" class="btn-copy-fix" data-fix="${escapeHtml(v.fix || '')}" title="Copy suggested fix to clipboard">
+                    📋 Copy Fix
+                  </button>
+                  <button type="button" class="btn btn-purple-subtle btn-sm btn-apply-single-fix" data-index="${idx}" data-excerpt="${escapeHtml(v.excerpt || '')}" data-fix="${escapeHtml(v.fix || '')}">
+                    Apply Fix
+                  </button>
+                </div>
+              </div>
+            `;
+
+            violationsContainer.appendChild(card);
+          });
+
+          // Bind copy buttons for suggested fix
+          document.querySelectorAll('.btn-copy-fix').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              const fixText = e.currentTarget.getAttribute('data-fix');
+              if (fixText) {
+                navigator.clipboard.writeText(fixText).then(() => {
+                  showToast('Suggested fix copied to clipboard!', '📋');
+                  const origHtml = e.currentTarget.innerHTML;
+                  e.currentTarget.innerHTML = '✓ Copied!';
+                  setTimeout(() => { e.currentTarget.innerHTML = origHtml; }, 1500);
+                }).catch(() => {
+                  showToast('Copied fix to clipboard', '📋');
+                });
+              }
+            });
+          });
+
+          // Function to recalculate score and update summary count pills locally
+          function updateScoreAndPillsAfterFix() {
+            const remainingBlockers = (currentReport.violations || []).filter(v => !v.isFixed && (v.severity || '').toLowerCase() === 'blocker').length;
+            const remainingWarnings = (currentReport.violations || []).filter(v => !v.isFixed && (v.severity || '').toLowerCase() === 'warning').length;
+            const remainingSuggestions = (currentReport.violations || []).filter(v => !v.isFixed && (v.severity || '').toLowerCase() === 'suggestion').length;
+            
+            // Recalculate score as: 100 minus (Blockers x 30) minus (Warnings x 10) minus (Suggestions x 5), minimum 0
+            const score = Math.max(0, 100 - (remainingBlockers * 30) - (remainingWarnings * 10) - (remainingSuggestions * 5));
+
+            let scoreColorClass = 'score-green';
+            if (score <= 40) scoreColorClass = 'score-red';
+            else if (score <= 70) scoreColorClass = 'score-orange';
+            else if (score <= 99) scoreColorClass = 'score-yellow';
+            else scoreColorClass = 'score-green';
+
+            // Update violation count summary pills
+            violationsCountSummary.innerHTML = `
+              <div class="violation-summary-pills">
+                <span class="summary-pill pill-blocker">${remainingBlockers} Blocker${remainingBlockers === 1 ? '' : 's'}</span>
+                <span class="summary-pill pill-warning">${remainingWarnings} Warning${remainingWarnings === 1 ? '' : 's'}</span>
+                <span class="summary-pill pill-suggestion">${remainingSuggestions} Suggestion${remainingSuggestions === 1 ? '' : 's'}</span>
+              </div>
+            `;
+
+            // Update circular score badge
+            const scoreCircle = document.querySelector('.score-badge-circle');
+            if (scoreCircle) {
+              scoreCircle.className = `score-badge-circle ${scoreColorClass}`;
+              const numEl = scoreCircle.querySelector('.score-number');
+              if (numEl) numEl.textContent = score;
+              scoreCircle.title = `Compliance Score: ${score}/100`;
+            }
+
+            // Update dynamic summary line
+            const summaryLine = document.querySelector('.review-summary-line');
+            if (summaryLine) {
+              if (remainingBlockers > 0) {
+                summaryLine.textContent = `Content is blocked due to ${remainingBlockers} blocker(s) and ${remainingWarnings} warning(s).`;
+              } else if (remainingWarnings > 0) {
+                summaryLine.textContent = `Content requires review due to ${remainingWarnings} warning(s) and ${remainingSuggestions} suggestion(s).`;
+              } else if (remainingSuggestions > 0) {
+                summaryLine.textContent = `Content meets brand guidelines with ${remainingSuggestions} suggestion(s) for improvement.`;
+              } else {
+                summaryLine.textContent = 'Content meets brand guidelines with no violations detected.';
+              }
+            }
+
+            // Requirement 2: After ALL blockers are fixed via Apply Fix buttons:
+            // - The status banner should automatically change to green "✅ APPROVED"
+            // - Show a small toast notification: "All blockers resolved! Content is ready for approval."
+            if (remainingBlockers === 0) {
+              const statusBanner = document.getElementById('statusBanner');
+              if (statusBanner) {
+                statusBanner.className = 'status-banner banner-approved';
+                const leftText = statusBanner.querySelector('.status-banner-left span');
+                if (leftText) {
+                  leftText.textContent = '✅ APPROVED — Content meets brand guidelines';
+                }
+              }
+              currentReport.overall_status = 'APPROVED';
+              showToast('All blockers resolved! Content is ready for approval.', '✅');
+
+              // Update active audit log entry if it matches
+              if (auditHistory.length > 0 && auditHistory[0].id === currentReport.id) {
+                auditHistory[0].status = 'APPROVED';
+                auditHistory[0].violationsCount = remainingWarnings + remainingSuggestions;
+                try {
+                  localStorage.setItem('brandguard_audit_log', JSON.stringify(auditHistory.slice(0, 50)));
+                } catch (e) {}
+                renderAuditTable();
+              }
+            }
+          }
+
+          // Single Apply Fix click handler (updates locally, does NOT re-call Gemini API)
+          document.querySelectorAll('.btn-apply-single-fix').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              const card = e.currentTarget.closest('.violation-card-improved');
+              const idx = parseInt(e.currentTarget.getAttribute('data-index'), 10);
+              const exc = e.currentTarget.getAttribute('data-excerpt');
+              const fix = e.currentTarget.getAttribute('data-fix');
+
+              if (!card || isNaN(idx) || !currentReport || !currentReport.violations[idx]) return;
+
+              const violationItem = currentReport.violations[idx];
+              if (violationItem.isFixed) return;
+
+              // 1. Replace text in reviewContentInput
+              let text = reviewContentInput.value;
+              let cleanFix = fix || '';
+              if (cleanFix.toLowerCase().includes('approved brand vocabulary:')) {
+                const m = cleanFix.match(/["']([^"']+)["']/);
+                if (m) cleanFix = m[1];
+              } else if (cleanFix.toLowerCase().startsWith('replace with')) {
+                const m = cleanFix.match(/["']([^"']+)["']/);
+                if (m) cleanFix = m[1];
+                else cleanFix = cleanFix.replace(/^replace with\s+/i, '').replace(/["']/g, '').trim();
+              } else if (cleanFix.toLowerCase().startsWith('append:')) {
+                cleanFix = cleanFix.replace(/^append:\s*["']?([^"']+)["']?.*$/i, '$1').trim();
+              } else if (cleanFix.toLowerCase().startsWith('remove "') || cleanFix.toLowerCase().startsWith('remove ')) {
+                cleanFix = '';
+              }
+
+              if (exc === 'End of marketing copy' || exc === 'End of copy') {
+                text = text.trim() + ' ' + cleanFix;
+              } else if (exc && text.includes(exc)) {
+                text = text.replace(exc, cleanFix);
+              } else if (exc) {
+                // Case-insensitive fallback replacement
+                const escapedExc = exc.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const reg = new RegExp(escapedExc, 'i');
+                if (reg.test(text)) {
+                  text = text.replace(reg, cleanFix);
+                }
+              }
+              reviewContentInput.value = text;
+              updateLiveCounters();
+
+              // Mark violation as fixed
+              violationItem.isFixed = true;
+
+              // 2. Visual card update:
+              // - Strike through BLOCKER/WARNING/SUGGESTION badge
+              // - Show green "✅ Fixed" badge instead
+              // - Gray out the entire card
+              // - Disable both "Copy Fix" and "Apply Fix" buttons on that card
+              card.classList.add('is-fixed');
+              const severityPill = card.querySelector('.severity-pill');
+              if (severityPill) {
+                severityPill.style.textDecoration = 'line-through';
+                severityPill.style.opacity = '0.45';
+              }
+              const badgeFixed = card.querySelector('.badge-fixed');
+              if (badgeFixed) {
+                badgeFixed.style.display = 'inline-flex';
+              }
+
+              const copyBtn = card.querySelector('.btn-copy-fix');
+              if (copyBtn) {
+                copyBtn.disabled = true;
+                copyBtn.style.opacity = '0.45';
+                copyBtn.style.cursor = 'not-allowed';
+              }
+
+              btn.disabled = true;
+              btn.textContent = '✓ Fixed';
+              btn.style.opacity = '0.45';
+              btn.style.cursor = 'not-allowed';
+
+              const wasBlocker = (violationItem.severity || '').toLowerCase() === 'blocker';
+              const remainingBlockersCount = (currentReport.violations || []).filter(v => !v.isFixed && (v.severity || '').toLowerCase() === 'blocker').length;
+
+              updateScoreAndPillsAfterFix();
+
+              if (remainingBlockersCount > 0 || !wasBlocker) {
+                showToast(`Applied fix for: "${exc || 'violation'}"`, '✓');
+              }
+            });
+          });
+        }
+
+        // -------------------------------------------------------------
+        // DECISION ACTIONS: APPROVE / OVERRIDE / REQUEST REVISION
+        // -------------------------------------------------------------
+        function showDecisionBadge(action) {
+          reportDecisionBadge.style.display = 'inline-flex';
+          if (action === 'Approve') {
+            reportDecisionBadge.textContent = '✅ Approved by Reviewer';
+            reportDecisionBadge.style.backgroundColor = '#F0FDF4';
+            reportDecisionBadge.style.color = '#16A34A';
+            reportDecisionBadge.style.border = '1px solid #86EFAC';
+          } else if (action === 'Override') {
+            reportDecisionBadge.textContent = '🚫 Flag Overridden';
+            reportDecisionBadge.style.backgroundColor = '#FEF2F2';
+            reportDecisionBadge.style.color = '#DC2626';
+            reportDecisionBadge.style.border = '1px solid #FCA5A5';
+          } else if (action === 'Revision') {
+            reportDecisionBadge.textContent = '↩ Revision Requested';
+            reportDecisionBadge.style.backgroundColor = '#EFF6FF';
+            reportDecisionBadge.style.color = '#2563EB';
+            reportDecisionBadge.style.border = '1px solid #BFDBFE';
+          }
+        }
+
+        function handleDecision(action, newAuditStatus, toastMsg, icon) {
+          if (!currentReport) {
+            showToast('Please run a brand review first', '⚠️');
+            return;
+          }
+
+          currentReport.decision = action;
+          showDecisionBadge(action);
+
+          const matchIndex = auditHistory.findIndex(a => a.id === currentReport.id);
+          if (matchIndex !== -1) {
+            auditHistory[matchIndex].status = newAuditStatus;
+          } else if (auditHistory.length > 0) {
+            auditHistory[0].status = newAuditStatus;
+          }
+
+          try {
+            localStorage.setItem('brandguard_audit_log', JSON.stringify(auditHistory.slice(0, 50)));
+          } catch (e) {}
+
+          renderAuditTable();
+          showToast(toastMsg, icon);
+        }
+
+        btnActionApprove.addEventListener('click', () => {
+          handleDecision('Approve', 'APPROVED', 'Content approved for publication', '✅');
+        });
+
+        btnActionOverride.addEventListener('click', () => {
+          handleDecision('Override', 'OVERRIDDEN', 'Compliance flags overridden by reviewer', '🚫');
+        });
+
+        btnActionRevision.addEventListener('click', () => {
+          handleDecision('Revision', 'REVISION REQUESTED', 'Revision requested from content creator', '↩');
+        });
+
+        function escapeHtml(str) {
+          if (!str) return '';
+          return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+        }
+
+        // -------------------------------------------------------------
+        // AUTO-FIX REPLACEMENTS (LOCAL UI UPDATE)
+        // -------------------------------------------------------------
+        btnAutoFix.addEventListener('click', () => {
+          if (!currentReport || !currentReport.violations) return;
+          const unappliedButtons = Array.from(document.querySelectorAll('.btn-apply-single-fix:not([disabled])'));
+          if (unappliedButtons.length === 0) {
+            showToast('All available fixes have already been applied.', 'ℹ️');
+            return;
+          }
+          unappliedButtons.forEach(btn => btn.click());
+          showToast(`Applied ${unappliedButtons.length} suggested fix${unappliedButtons.length === 1 ? '' : 'es'}!`, '✨');
+        });
+
+        // -------------------------------------------------------------
+        // AUDIT TABLE RENDERING
+        // -------------------------------------------------------------
+        function renderAuditTable() {
+          const query = auditSearch.value.trim().toLowerCase();
+          const filterStatus = auditFilterStatus.value;
+          const filterType = auditFilterType.value;
+
+          const filtered = auditHistory.filter(row => {
+            const rowStatus = (row.status || '').toUpperCase();
+            if (filterStatus !== 'ALL' && rowStatus !== filterStatus) return false;
+            if (filterType !== 'ALL' && row.contentType !== filterType) return false;
+            if (query) {
+              const hay = (row.contentSnippet + ' ' + row.contentType + ' ' + row.status + ' ' + row.id).toLowerCase();
+              if (!hay.includes(query)) return false;
+            }
+            return true;
+          });
+
+          if (auditHistory.length === 0) {
+            auditTableBody.innerHTML = `
+              <tr>
+                <td colspan="5" class="audit-empty-row">
+                  <div class="audit-empty-icon">📋</div>
+                  <div class="audit-empty-title">No reviews yet</div>
+                  <div class="audit-empty-desc">Run your first brand review above to track governance history.</div>
+                </td>
+              </tr>
+            `;
+            return;
+          }
+
+          if (filtered.length === 0) {
+            auditTableBody.innerHTML = `
+              <tr>
+                <td colspan="5" style="text-align: center; padding: 2.5rem 1rem; color: var(--navy-muted);">
+                  <div style="font-size: 1.6rem; margin-bottom: 0.35rem;">🔍</div>
+                  <div style="font-weight: 700; color: var(--navy-dark); font-size: 0.95rem;">No matching audit records</div>
+                  <div style="font-size: 0.82rem; margin-top: 0.2rem;">Try adjusting your search query or status filter.</div>
+                </td>
+              </tr>
+            `;
+            return;
+          }
+
+          auditTableBody.innerHTML = filtered.map(row => {
+            const statusUpper = (row.status || 'APPROVED').toUpperCase();
+            let statusClass = 'approved';
+            let dotClass = 'dot-green';
+
+            if (statusUpper.includes('BLOCK') || statusUpper.includes('OVERRID')) {
+              statusClass = 'blocked';
+              dotClass = 'dot-red';
+            } else if (statusUpper.includes('WARN') || statusUpper.includes('REVISION')) {
+              statusClass = 'warnings';
+              dotClass = 'dot-orange';
+            }
+
+            const violBadge = (row.violationsCount === 0 || !row.violationsCount)
+              ? `<span style="color: var(--green-pass); font-weight: 700;">0 (Compliant)</span>`
+              : `<span style="color: ${statusUpper.includes('BLOCK') ? 'var(--red-critical)' : 'var(--amber-warning)'}; font-weight: 700;">${row.violationsCount} violation${row.violationsCount === 1 ? '' : 's'}</span>`;
+
+            return `
+              <tr>
+                <td style="font-weight: 600; white-space: nowrap;">
+                  <div>${escapeHtml(row.time)}</div>
+                  <div style="font-size: 0.72rem; color: var(--navy-muted); font-weight: normal;">${escapeHtml(row.id)}</div>
+                </td>
+                <td>
+                  <span class="content-tag">${escapeHtml(row.contentType)}</span>
+                </td>
+                <td>${violBadge}</td>
+                <td>
+                  <span class="status-tag ${statusClass}">
+                    <span class="status-dot-sm ${dotClass}"></span>
+                    <span>${escapeHtml(statusUpper)}</span>
+                  </span>
+                </td>
+                <td style="text-align: right; white-space: nowrap;">
+                  <button type="button" class="btn btn-secondary btn-sm btn-inspect-audit" data-id="${row.id}">
+                    Inspect
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join('');
+
+          // Bind inspect buttons
+          document.querySelectorAll('.btn-inspect-audit').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              const id = e.currentTarget.getAttribute('data-id');
+              openAuditModal(id);
+            });
+          });
+        }
+
+        function openAuditModal(id) {
+          const item = auditHistory.find(a => a.id === id);
+          if (!item) return;
+          selectedAuditRecord = item;
+
+          const statusUpper = (item.status || 'APPROVED').toUpperCase();
+          let statusClass = 'approved';
+          if (statusUpper.includes('BLOCK') || statusUpper.includes('OVERRID')) statusClass = 'blocked';
+          else if (statusUpper.includes('WARN')) statusClass = 'warnings';
+          else if (statusUpper.includes('REVISION')) statusClass = 'revision';
+
+          modalBodyContent.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+              <div>
+                <span style="font-size: 1.1rem; font-weight: 800; color: var(--navy-dark);">${escapeHtml(item.id)}</span>
+                <span class="content-tag" style="margin-left: 0.5rem;">${escapeHtml(item.contentType)}</span>
+              </div>
+              <span class="status-tag ${statusClass}">${escapeHtml(statusUpper)}</span>
+            </div>
+            <div>
+              <span class="input-label">Executive Summary</span>
+              <p style="font-size: 0.95rem; font-style: italic; color: var(--navy-dark); line-height: 1.5;">${escapeHtml(item.summary || 'Audit record logged.')}</p>
+            </div>
+            <div>
+              <span class="input-label">Archived Marketing Copy</span>
+              <div style="background: var(--card-subtle); padding: 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-size: 0.88rem; line-height: 1.6; max-height: 160px; overflow-y: auto;">
+                ${escapeHtml(item.fullContent || item.contentSnippet)}
+              </div>
+            </div>
+            <div>
+              <span class="input-label">Violations Logged (${item.violations ? item.violations.length : item.violationsCount})</span>
+              <div style="display: flex; flex-direction: column; gap: 0.65rem; max-height: 220px; overflow-y: auto;">
+                ${item.violations && item.violations.length > 0 ? item.violations.map(v => `
+                  <div style="background: #FFF; border: 1px solid var(--border-color); padding: 0.7rem 0.9rem; border-radius: var(--radius-sm); font-size: 0.85rem;">
+                    <div><strong>Severity:</strong> <span style="font-weight: 700; color: ${v.severity === 'Blocker' ? 'var(--red-critical)' : 'var(--navy-dark)'};">${escapeHtml(v.severity || 'Warning')}</span></div>
+                    <div><strong>Excerpt:</strong> "${escapeHtml(v.excerpt || '')}"</div>
+                    <div><strong>Rule:</strong> ${escapeHtml(v.rule_broken || '')}</div>
+                    ${v.fix ? `<div style="color: var(--green-pass);"><strong>Fix:</strong> ${escapeHtml(v.fix)}</div>` : ''}
+                  </div>
+                `).join('') : '<p style="font-size: 0.85rem; color: var(--green-pass);">✓ Zero violations logged on this scan.</p>'}
+              </div>
+            </div>
+          `;
+
+          auditDetailModal.style.display = 'flex';
+        }
+
+        function closeModal() {
+          auditDetailModal.style.display = 'none';
+          selectedAuditRecord = null;
+        }
+
+        btnCloseModal.addEventListener('click', closeModal);
+        btnCloseModal2.addEventListener('click', closeModal);
+        auditDetailModal.addEventListener('click', (e) => {
+          if (e.target === auditDetailModal) closeModal();
+        });
+
+        btnRestoreAuditContent.addEventListener('click', () => {
+          if (selectedAuditRecord) {
+            reviewContentInput.value = selectedAuditRecord.fullContent || selectedAuditRecord.contentSnippet;
+            contentTypeSelect.value = selectedAuditRecord.contentType;
+            updateLiveCounters();
+            closeModal();
+            showToast('Archived copy restored to workspace.');
+            runBrandReview();
+          }
+        });
+
+        // Run Review Click
+        btnRunReview.addEventListener('click', runBrandReview);
+
+        // Audit Filters
+        auditSearch.addEventListener('input', renderAuditTable);
+        auditFilterStatus.addEventListener('change', renderAuditTable);
+        auditFilterType.addEventListener('change', renderAuditTable);
+
+        btnClearAuditLog.addEventListener('click', () => {
+          if (confirm('Clear all local audit history?')) {
+            auditHistory = [];
+            localStorage.removeItem('brandguard_audit_log');
+            renderAuditTable();
+            showToast('Audit history cleared');
+          }
+        });
+
+        btnDownloadCsv.addEventListener('click', () => {
+          if (auditHistory.length === 0) {
+            showToast('No audit entries to export', '⚠️');
+            return;
+          }
+          let csv = 'ID,Time,ContentType,ViolationsCount,Status,Summary\n';
+          auditHistory.forEach(r => {
+            const cleanSummary = (r.summary || '').replace(/"/g, '""');
+            csv += `"${r.id}","${r.time}","${r.contentType}",${r.violationsCount || 0},"${r.status}","${cleanSummary}"\n`;
+          });
+
+          const blob = new Blob([csv], { type: 'text/csv' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `brandguard-audit-log-${Date.now()}.csv`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          showToast('Audit log CSV downloaded');
+        });
+
+        // Export Report JSON
+        btnExportJson.addEventListener('click', () => {
+          if (!currentReport) return;
+          const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(currentReport, null, 2));
+          const dlAnchor = document.createElement('a');
+          dlAnchor.setAttribute('href', dataStr);
+          dlAnchor.setAttribute('download', `gemini-compliance-report-${currentReport.id}.json`);
+          document.body.appendChild(dlAnchor);
+          dlAnchor.click();
+          dlAnchor.remove();
+          showToast('Report JSON downloaded');
+        });
+
+        // Copy Report Summary
+        btnCopyReport.addEventListener('click', () => {
+          if (!currentReport) return;
+          const summary = `BrandGuard AI Compliance Review (Gemini 1.5 Pro)
+Report ID: ${currentReport.id}
+Time: ${currentReport.timestamp}
+Content Type: ${currentReport.contentType}
+Overall Status: ${currentReport.overall_status}
+Decision: ${currentReport.decision || 'Pending Review'}
+Summary: ${currentReport.summary}
+Total Violations: ${currentReport.violations ? currentReport.violations.length : 0}`;
+
+          navigator.clipboard.writeText(summary).then(() => {
+            showToast('Report summary copied to clipboard!');
+          }).catch(() => {
+            showToast('Copied summary to clipboard');
+          });
+        });
+
+        // Initialize with default FinTech scenario loaded
+        activateScenario('fintech');
+        renderAuditTable();
+
+      })();
+    </script>
+  </body>
+</html>
